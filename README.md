@@ -188,6 +188,13 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 2.	Öffne Grafana → Dashboard → Import → Upload JSON file
 3.	Datei auswählen -> Importieren
 
+Hinweis: Die Link-Adressen zu
+- Events (vieventlog-Events)
+- Kältekreislauf (vieventlog-Dashboard)
+- Datenbank (Datenbank-Verwaltungstool)
+- VICare (homeassistent)
+
+müssen selbst händisch eingfügr werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugedügt werden.
 
 ##  5. Lizenz
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien
