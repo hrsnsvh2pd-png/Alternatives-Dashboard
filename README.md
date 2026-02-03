@@ -22,7 +22,7 @@ Hinweis: Das Grafana-Dashboard läuft bei mir auf meiner Synology-Datenstation i
 
 ### macOS (Apple)
 1. Mit Homebrew:
-```bash
+bash
 brew install grafana
 brew services start grafana
 2.	Alternativ: Download des macOS-Pakets von der Grafana-Website.
