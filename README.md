@@ -162,10 +162,13 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 
 
 ## 4. Lizenz
-
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien
 stehen unter der **Creative Commons Attribution 4.0 International
 (CC BY 4.0)** Lizenz.
+
+Kurz gesagt:
+- Nutzung, Weitergabe und Anpassung sind erlaubt
+- Namensnennung des Autors ist erforderlich
 
 Vollständiger Lizenztext:
 https://creativecommons.org/licenses/by/4.0/legalcode
