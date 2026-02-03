@@ -6,7 +6,7 @@ Dieses Repository enthält ein Grafana-Dashboard als Classic-JSON-Dateien. Das D
 
 Hinweis: Das Grafana-Dashboard läuft bei mir auf meiner Synology-Datenstation in einem -Container. Nur diese Installation habe ich getestet. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet. 
 
----
+----
 
 ## 1. Installation von Grafana
 
@@ -99,3 +99,4 @@ Datenbank-Verwaltung: Viessmann-Datenbank z.B. /volume1/docker/viessmann_events.
 3.	Datei auswählen → Importieren
 
 Hinweis: SQL-Statements für zusätzliche Views in viessmann_events.db müssen separat erstellt werden.
+
