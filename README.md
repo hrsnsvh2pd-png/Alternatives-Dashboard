@@ -1,18 +1,46 @@
 # Alternatives-Dashboard
-Grafana Dashboard auf Grundlage der von vieventlog erzeugten SQLite-Datenbank
+Grafana Dashboard auf Grundlage der von vieventlog erzeugten und fortgeschriebenen SQLite-Datenbank viessmann_events.db. 
 # Grafana Dashboard Repository
 
-Dieses Repository enthält ein Grafana-Dashboard als Classic-JSON-Dateien. Das Dashboard können direkt in eine eigene Grafana-Instanz importiert werden.
+Dieses Repository enthält ein Grafana-Dashboard als Classic-JSON-Datei. Das Dashboard können direkt in eine eigene Grafana-Instanz importiert werden.
 
-Hinweis: Das Grafana-Dashboard läuft bei mir auf meiner Synology-Datenstation in einem -Container. Nur diese Installation habe ich getestet. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet. 
+Das Dashboard läuft unter Grafana OSS. Grafana OSS ist ein Produkt der Grafana OSS © Grafana Labs und ist lizenziert unter der GNU Affero General Public License v3.0 (AGPLv3). Der vollständige Quellcode von Grafana ist öffentlich verfügbar unter:
+
+https://github.com/grafana/grafana
+
+Dieses Produkt wird für das Alternative Dashboard unverändert genutzt. Somit ist eine private Nutzung ohne Offenlegungspflichten möglich. Die Lizenzbedingungen sind unter
+
+https://www.gnu.org/licenses/agpl-3.0.txt
+
+einsehbar.
+
+Jeder Benutzer muss sich eine eigene Grafana-Anwendung herunterladen und installeren. 
+
+Das für die Anbindung der viessmann_events-Datenbank erforderlich SQLite-Plug in ist Bestandteil der Grafana-Standard-Distrubution und wirft insoweit keine Lizenzprobleme auf.
+
+Das Grafana Dashboard setzt auf der viessmann_events.db auf, die von der vieventlog-Anwendung erzeugt und fortgeschrieben wird.  vieventlog ist ein Produkt von mschneider82. Der vollständige Quellcode von vieventlog ist öffentlich verfügbar unter:
+
+https://github.com/mschneider82/vieventlog/releases
+
+vieventlog ist unter der MIT-Lizenz lizenziert. Die Lizenzbedingungen sind unter 
+
+https://github.com/mschneider82/vieventlog/blob/main/LICENSE
+
+einsehbar. 
 
 ----
 
-## 1. Installation von Grafana
+## 1. Vorbemerkung
+
+
+
+## 2. Installation von Grafana
+
+Das Grafana-Dashboard läuft bei mir auf meiner Synology-Datenstation in einem Docker-Container. Nur diese Installation habe ich getestet. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. 
 
 ### Windows
 1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: [https://grafana.com/grafana/download](https://grafana.com/grafana/download)
-2. Installiere Grafana wie gewohnt.https://192.168.178.3:5001/
+2. Installiere Grafana wie gewohnt.
 3. Starte Grafana über das Startmenü. Standardmäßig läuft Grafana unter `http://localhost:3000`.
 4. Standard-Login: Benutzername: `admin`, Passwort: `admin`
 
@@ -103,7 +131,7 @@ sudo systemctl enable grafana-server
     http://my_synology_ip:3030
     Nutzer:  admin (oder alternativer Nutzer mit Admin-Rechten
 
-    Diese Aufruf (notwendig mit Admin-Rechten) ermöglicht eine Veränderung des Dashboards. Die Änderungen sollten     sicherheitshalber immer an einer Kopie erfolgen. 
+    Diese Aufruf (notwendig mit Admin-Rechten) ermöglicht eine Veränderung des Dashboards. Die Änderungen sollten sicherheitshalber immer an einer Kopie erfolgen. 
  
     Achtung: Der Port 3030 ist der externe Port, den ich im Grafana-Container eingestellt habe (Port-Mapping). Grafana selbst erwartet     den Zugriff über Port 3000; der ist bei mir aberschon anders belegt. Auch dieses Port Mapping erfolgt auf der Synology über den
     Container Manager. 
@@ -113,7 +141,7 @@ Datenbank-Verwaltung: Viessmann-Datenbank z.B. /volume1/docker/viessmann_events.
 Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 
 
-##  2. Logische views in der viessmann_events.db erzeugen
+##  3. Logische views in der viessmann_events.db erzeugen
 1.  Datenbank Verwaltungssoftware installieren (z.B. DB Browser for SQLite](https://sqlitebrowser.org/)
 2.  Datenbank öffnen
 3.  Beide logische Views auf die Tabelle temperature_snapshots erzeugen:
@@ -155,13 +183,13 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
     'localtime') desc )
 
 
-##  3. Import des Dashboards
+##  4. Import des Dashboards
 1.	Lade die Dashboard-JSON-Datei herunter: Viessmann Wärmepumpe – All-in-One Dashboard.json￼
 2.	Öffne Grafana → Dashboard → Import → Upload JSON file
 3.	Datei auswählen -> Importieren
 
 
-## 4. Lizenz
+##  5. Lizenz
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien
 stehen unter der **Creative Commons Attribution 4.0 International
 (CC BY 4.0)** Lizenz.
