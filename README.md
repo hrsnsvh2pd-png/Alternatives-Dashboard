@@ -194,7 +194,7 @@ Hinweis: Die Link-Adressen zu
 - Datenbank (Datenbank-Verwaltungstool)
 - VICare (homeassistent)
 
-müssen selbst händisch eingfügr werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugedügt werden.
+müssen selbst händisch eingfügt werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden.
 
 ##  5. Lizenz
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien
