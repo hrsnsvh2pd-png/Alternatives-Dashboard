@@ -151,7 +151,7 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 
 
 
-    CREATE VIEW 'temperature_snapshots_stat' as
+    CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as
     SELECT datetime  (
     substr(timestamp, 1, 19),'localtime') as 'timestamp_mez',
     thermal_power * 1000 / 60 * sample_interval as 'Wärmeleistung',
@@ -168,7 +168,7 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 
 
 
-    CREATE VIEW 'temperature_snapshots_takte_heute' as
+    CREATE VIEW IF NOT EXISTS 'temperature_snapshots_takte_heute' as
     SELECT datetime  (
     substr(timestamp, 1, 19), 'localtime') as timestamp_mez,
     installation_id,
