@@ -59,7 +59,9 @@ c) ökonomische Effizienzeinschätzung mittels Ampellogik über Schwellwerte<br>
     <br>
 d) Aus meiner beruflichen Erfahrung weiß ich, dass eigentlich jeder Nutzer seine eigenen Vorstellungen bezüglich Statistik und Dashboard hat. Deshalb habe ich das alternative Dashboard auf der Grafana-Plattform (OSS) entwickelt. Jeder Nutzer kann es auf dieser Plattform nach seinen Wünschen und Vorstellungn individuell ändern bzw. anpassen.
 
-Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf viebentlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. 
+Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf viebentlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. <br>
+<br>
+Die mit ausgelieferte Datei "Alternatives Dashboard Vxy.pdf" enthält Hinweise zur Nutzung des Dashboards sowie einen Leitfaden zur Installation von Grafana sowie zum Laden und zur Einrichtung des Dashboards in Grafana.<br>
 
 
 ## 2. Mein Use Case
