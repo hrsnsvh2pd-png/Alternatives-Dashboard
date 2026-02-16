@@ -36,11 +36,17 @@ Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner o
 
 ## 1. Vorbemerkung
 Matthias Schneider hat mit sehr viel Herzblut vientlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
+
 Dies war meine Motivation. 
-Die wesentlichen Änderungen betreffen neben einigen zusätzlichen für meine Bedürfnisse erforderlichen Feldern (insbes. Anzahl Kompressorstarts des lfd. Tages,Tage ohne Kompressorlaufzeit (ich nutze Solarthermie), Stromverbrauch pro Tag) insbesondere 3 wesentliche Punkte:
-a) Integration der Events-Timeline in ein Gesamt-Dashboard mit Sensor-/Statistikwerten und Betriebsdaten/-verläufen 
-b) Alertsystem mittels Ampellogik über Schwellwerte wo immer möglich und sinnvoll
-c) ökonomische Effizienzeinschätzung mittels Ampellogik über Schwellwerte
+
+Die wesentlichen Änderungen betreffen neben einigen zusätzlichen für meine Bedürfnisse erforderlichen Feldern (insbes. Anzahl Kompressorstarts des lfd. Tages,Tage ohne Kompressorlaufzeit (ich nutze Solarthermie), Stromverbrauch pro Tag) insbesondere 3 wesentliche Punkte:<br>
+<br>
+a) Integration der Events-Timeline in ein Gesamt-Dashboard mit Sensor-/Statistikwerten und Betriebsdaten/-verläufen <br>
+<br>
+b) Alertsystem mittels Ampellogik über Schwellwerte wo immer möglich und sinnvoll<br>
+<br>
+c) ökonomische Effizienzeinschätzung mittels Ampellogik über Schwellwerte<br>
+<br>
     Der Vergleich der jährlichen laufenden Mehr-/Minderkosten einer Wärmepumpe wird wesentlich durch das    
     Verhältnis Strom- zu Gaspreis pro KW/h beeinflusst. Und dies auch, wenn man nicht wie ich, den 
     vorhandenen Gasbrenner als externe Heizquelle weiter nutzt. Die Gasanbieter rechnen den Verbrauch von 
@@ -49,7 +55,8 @@ c) ökonomische Effizienzeinschätzung mittels Ampellogik über Schwellwerte
     Damit ist die Jahreszahl (Kalenderjahr) ein sehr guter Indikator für die ökonomische Effizienz einer 
     Wärmepumpe: Liegt die (ehrliche) JAZ über dem Arbeitspreis-Verhältnis von Strom- zu Gas (bei uns ab 
     1.1.2026 = 2,98 ist das ein sehr guter Indikator dafür, dass die Wärmepumpe wahrscheinlich kostengünstiger 
-    als ein Gasbrenner ist.
+    als ein Gasbrenner ist.<br>
+    <br>
 d) Aus meiner beruflichen Erfahrung weiß ich, dass eigentlich jeder Nutzer seine eigenen Vorstellungen bezüglich Statistik und Dashboard hat. Deshalb habe ich das alternative Dashboard auf der Grafana-Plattform (OSS) entwickelt. Jeder Nutzer kann es auf dieser Plattform nach seinen Wünschen und Vorstellungn individuell ändern bzw. anpassen.
 
 Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf viebentlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. 
@@ -58,8 +65,8 @@ Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installat
 ## 2. Mein Use Case
 
 <img width="1330" height="940" alt="image" src="https://github.com/user-attachments/assets/97ad467d-27cf-46ca-91f8-932a08db7a9f" />
-
-
+<br>
+<br>
 
 Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus errreichbar (separeate Linkbuttons für Events und Dashboard/Kältekreislauf). 
 
@@ -75,109 +82,106 @@ Alle Links können nachI nstallation über die Grafana-Oberfläche angepasst ode
 
 Um das über den bereitgestellten JSON gelieferte Dashboard nutzen zu können, müssen 3 logische Views in der Datenbank viessmann_events.db erzeugt werden. Dies kann über eines der vorstehend genannten Datenbankmanagement-Tools ganz einfach über die Eingabe und Ausführung der nachsehenden SQL-Statements erfolgen. 
 
-a) temperature_snapshot.stat
-
+a) temperature_snapshot.stat  <br>
+<br>
 Diese View dient der Umstellung der Timestamps auf ISO 8601 und auf 'localtime', da ich andernfalls nicht die erforderliche Zeitzonenproblematik (arbeiten mit deutscher Zeit auch in einer anderen Zeitzone) hinbekommen habe und vorbereitende Brechnungen für Stromverbrauch, Wärmeleistung und Laufzeit.
 
- ![image](https://github.com/user-attachments/assets/4bbe46ce-44f6-4935-b7d4-bedb31dd03a2)
-
- Zum Kopieren:
-
-CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as 
-      SELECT datetime(substr(timestamp, 1, 19), 'localtime') 
-      as 'timestamp_mez', 
-      thermal_power * 1000 / 60 * sample_interval 
-      as 'Wärmeleistung',
-      compressor_power / 60 * sample_interval 
-      as 'elektrische_Leistung',
-      thermal_power * 1000 / compressor_power 
-      as  'COP_calc',
-      time('00:00', '+' || (compressor_active * sample_interval) || ' minutes') 
-      as 'Laufzeit', 
-      * 
-      FROM temperature_snapshots 
-      ORDER BY installation_id desc, 
-      datetime(substr(timestamp, 1, 19), 'localtime' ) desc
-
-b) temperature_snapshots_takte heute
+CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as <br>
+      SELECT datetime(substr(timestamp, 1, 19), 'localtime') <br>
+      as 'timestamp_mez', <br>
+      thermal_power * 1000 / 60 * sample_interval <br>
+      as 'Wärmeleistung', <br>
+      compressor_power / 60 * sample_interval <br>
+      as 'elektrische_Leistung', <br>
+      thermal_power * 1000 / compressor_power <br>
+      as  'COP_calc', <br>
+      time('00:00', '+' || (compressor_active * sample_interval) || ' minutes') <br>
+      as 'Laufzeit', <br>
+      * <br>
+      FROM temperature_snapshots <br>
+      ORDER BY installation_id desc, <br>
+      datetime(substr(timestamp, 1, 19), 'localtime' ) desc<br>
+<br>
+b) temperature_snapshots_takte heute  <br>
+<br>
 Diese View dient der Erkennung von Ein-/Ausschaltung des Kompressors zur Berechnung der Kompressorstarts des laufenden Tages ("Vorlesen" des Kompressorzustandes im zeitlich nachgelegerten Datensatz und übertragung des kommenden Status in den gerade berarbeiteten Datensatz)
 
-![image](https://github.com/user-attachments/assets/4e3edeef-7160-4080-91e3-63389c410421)
-Zum Kopieren:
-
-CREATE VIEW IF NOT EXISTS
- 'temperature_snapshots_takte_heute' 
-      as SELECT datetime ( substr(timestamp, 1, 19), 'localtime') 
-      as timestamp_mez, 
-      installation_id, 
-      Compressor_active, 
-      LAG ( compressor_active) over(order by installation_id desc, datetime ( substr(timestamp, 1, 19), 'localtime') desc) 
-      as next_period, 
-      LAG ( compressor_active) over(order by installation_id desc, 
-      datetime ( substr(timestamp, 1, 19), 'localtime') desc )
-
-c) event_betriebszustand_timeline
-Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mappingeinzelner Events auf bestimmte Betriebszustände
-
-<img width="1160" height="651" alt="image" src="https://github.com/user-attachments/assets/759db04e-1501-4923-9a44-3cf81f917172" />
-
-Zum Kopieren: 
-
-CREATE VIEW 'event_betriebszustand_timeline' as
-
-SELECT
-    strftime   (
-  '%F %T',
-  event_timestamp) AS event_timestamp_start,
-  -- Endzeit = vorherige Zeile (jüngerer Event) oder NOW für die erste Zeile
-    CASE 
-        WHEN LAG(event_timestamp) OVER (
-                 PARTITION BY installation_id
-                 ORDER BY event_timestamp DESC, error_code ASC
-             ) IS NULL
-        THEN strftime('%F %T', 'now')
-        ELSE strftime(
-                 '%F %T',
-                 LAG(event_timestamp) OVER (
-                     PARTITION BY installation_id
-                     ORDER BY event_timestamp DESC, error_code ASC
-                 )
-             )
-    END AS event_timestamp_end,
-  strftime('%F %T', created_at) AS created_at,
-  error_code,
-  human_readable,
-  CASE                                                                       
-          WHEN error_code in ('S.118')                       THEN 'S.125'   
-          WHEN error_code in ('S.127', 'S.135', 'S.176')     THEN 'S.128     
-  END
-  FROM events
-WHERE installation_id = ${anlage_id}
-  AND active = 1 and
-  error_code <> 'S.187'    
-
+CREATE VIEW IF NOT EXISTS<br>
+ 'temperature_snapshots_takte_heute' <br>
+      as SELECT datetime ( substr(timestamp, 1, 19), 'localtime') <br>
+      as timestamp_mez, <br>
+      installation_id, <br>
+      Compressor_active, <br>
+      LAG ( compressor_active) over(order by installation_id desc, datetime ( substr(timestamp, 1, 19), 'localtime') desc) <br>
+      as next_period, <br>
+      LAG ( compressor_active) over(order by installation_id desc, <br>
+      datetime ( substr(timestamp, 1, 19), 'localtime') desc )<br>
+<br>
+c) event_betriebszustand_timeline  <br>
+<br>
+Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mappingeinzelner Events auf bestimmte Betriebszustände <br>
+<br>
+CREATE VIEW 'event_betriebszustand_timeline' as <br>
+SELECT  <br>
+    strftime   (<br>
+  '%F %T', <br>
+  event_timestamp) AS event_timestamp_start,<br>
+<br>
+    CASE <br>
+        WHEN LAG(event_timestamp) OVER (  <br>
+                 PARTITION BY installation_id  <br>
+                 ORDER BY event_timestamp DESC, error_code ASC <br>
+             ) IS NULL  <br>
+        THEN strftime('%F %T', 'now') <br>
+        ELSE strftime(  <br>
+                 '%F %T',  <br>
+                 LAG(event_timestamp) OVER (  <br>
+                     PARTITION BY installation_id  <br>
+                     ORDER BY event_timestamp DESC, error_code ASC  <br>
+                 )   <br>
+             )  <br>
+    END AS event_timestamp_end, <br>
+  strftime('%F %T', created_at) AS created_at,  <br>
+  error_code,  <br>
+  human_readable,  <br>
+  CASE   <br>                                                                                          
+          WHEN error_code in ('S.118')                       THEN 'S.125'   <br> 
+          WHEN error_code in ('S.127', 'S.135', 'S.176')     THEN 'S.128'   <br>
+  ELSE error_code <br>
+  END <br>
   
+FROM events <br>
+WHERE active = 1 AND  <br>
+error_code <> 'S.187'   <br>
+<br>
+<br>
 ## 4. Installation von Grafana
 
 Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgeäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windowas-PC unter Windows 11 installiert. Ich habe aufgrund der Verbreitung im beiligenden pdf-Dokuement die Installation unter Windows ausführlich beeschrieben. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. 
 
 Die ausführliche Installation unter Windows ist auch auf den Seten 14 - 25 in beiliegenden pdf-Dokument beschrieben
 
-### Windows
-1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: (https://grafana.com/get/)
-
-Achtung: Auf der Downloadseite sind mehrere Grafana-Versionen verfügbar (Cloud und OSS). Nach klicken auf OSS erscheint eine Auswahl Enterprise und OSS. Bitte die kostenlose OSS-Version verwenden,es sein denn, jemand möchte eine andere kostenpflichtige Version erwerben. 
+### Windows<br>
+1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: (https://grafana.com/get/)<br>
+<br>
+Achtung: Auf der Downloadseite sind mehrere Grafana-Versionen verfügbar (Cloud und OSS). Nach klicken auf OSS erscheint eine Auswahl Enterprise und OSS. Bitte die kostenlose OSS-Version verwenden,es sein denn, jemand möchte eine andere kostenpflichtige Version erwerben. <br>
 
 Hinweis: Grafana läuft in der OSS-Version ausschließlich lokal. Nach meinen Informationen werden keine Daten oder Nutzungsinformationen in irgend einer Form an GrafanaLabs übertragen.
-
-2. Installiere Grafana wie gewohnt.
-3. Starte grafana-server.exe
-   --> dazu mit der rechten Maustaste unter C:\Programme\GrafanaLabs\grafana\bin die Datei grafana-server.exe klicken und diese unbedingt als Administrator ausführen
-4. Starte Grafana über das Startmenü. Standardmäßig läuft Grafana unter `http://localhost:3000`.
-
-<img width="517" height="513" alt="image" src="https://github.com/user-attachments/assets/7eb93da9-7ddd-4b5c-8d7b-c01760623a75" />
-
-
+<br>
+<br>
+2. Installiere Grafana wie gewohnt.<br>
+<br>
+<br>
+3. Starte grafana-server.exe <br>
+   --> dazu mit der rechten Maustaste unter C:\Programme\GrafanaLabs\grafana\bin die Datei grafana-server.exe klicken und diese unbedingt als Administrator ausführen <br>
+   <br>
+   <br>
+4. Starte Grafana über das Startmenü. Standardmäßig läuft Grafana unter `http://localhost:3000`.<br>
+<br>
+<br>
+<img width="517" height="513" alt="image" src="https://github.com/user-attachments/assets/7eb93da9-7ddd-4b5c-8d7b-c01760623a75" />  <br>
+<br>
+<br>
 5. Standard-Login: Benutzername: `admin`, Passwort: `admin`
    Nach dem erstmaligen Aufruf muss das admin-Passowrt geändert werden.
 
@@ -235,127 +239,154 @@ Hinweis: Nach dem ersten Aufruf muss das Adinistrator-Passwort geändert werden.
 
 Datenbank-Verwaltung: Viessmann-Datenbank z.B. /volume1/docker/viessmann_events.db, 
 Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
-
-
+<br>
+<br>
 ##  5. Import des Dashboards
 1.	Lade die Dashboard-JSON-Datei herunter: Viessmann Wärmepumpe – All-in-One Dashboard.json
 2.	Windows: Starte grafaner-server.exe als Administrator
 3.	Starte Grafana
 4.	Auswahl → Dashboard
 5.	Einrichten der Datasource (Verbindung zur viessmann_events.db)
-    Unter Connections --> Datasource auf Add "new connection klicken"
-    <img width="301" height="398" alt="image" src="https://github.com/user-attachments/assets/93a2f160-40e5-4f43-9e2d-5ea274a1182a" />
-
-    auf auf "new connection" klicken und SQLite eingeben
-    <img width="1344" height="471" alt="image" src="https://github.com/user-attachments/assets/53081b3c-04e1-4324-ae69-d4d483ba31ce" />
-    
-    auf "SQLite" klicken
-  	<img width="510" height="172" alt="image" src="https://github.com/user-attachments/assets/124acfd2-5367-47e5-81b2-9c4c99a57753" />
-
-    auf "Install" klicken
-  	<img width="1343" height="294" alt="image" src="https://github.com/user-attachments/assets/de0903e2-fa01-4782-ba6d-fe33baa4024f" />
-
-    auf "Add new Datasource klicken
-  	<img width="1343" height="193" alt="image" src="https://github.com/user-attachments/assets/ba589a78-4874-4bb5-ae9f-358d8e8d0655" />
-
+    Unter Connections --> Datasource auf "Add new connection klicken"<br>
+    <br>
+    <img width="301" height="398" alt="image" src="https://github.com/user-attachments/assets/93a2f160-40e5-4f43-9e2d-5ea274a1182a" />  <br>
+    <br>
+    auf auf "new connection" klicken und SQLite eingeben <br>
+    <br>
+    <img width="1344" height="471" alt="image" src="https://github.com/user-attachments/assets/53081b3c-04e1-4324-ae69-d4d483ba31ce" /><br>
+    <br>
+    auf "SQLite" klicken  <br>
+    <br>
+  	<img width="510" height="172" alt="image" src="https://github.com/user-attachments/assets/124acfd2-5367-47e5-81b2-9c4c99a57753" /><br>
+   <br>
+    auf "Install" klicken <br>
+    <br>
+  	<img width="1343" height="294" alt="image" src="https://github.com/user-attachments/assets/de0903e2-fa01-4782-ba6d-fe33baa4024f" /><br>
+<br>
+    auf "Add new Datasource klicken<br>
+    <br>
+  	<img width="1343" height="193" alt="image" src="https://github.com/user-attachments/assets/ba589a78-4874-4bb5-ae9f-358d8e8d0655" />  <br>
+<br>
 
     a) Pfad zur Datenbank eintragen
-          → wo bei Euch die viesmann_events.db
-               physisch gespeichert ist
-           → C:\ ….\viesmann_events.db
-                (Windows-Verzeichnis-Schreibweise)
+          → wo bei Euch die viesmann_events.db physisch gespeichert ist 
+      
+           → C:\ ….\viesmann_events.db (Windows-Verzeichnis-Schreibweise)
+           
            → alle übrigen Felder unverändert lassen
           
     b) auf Save & Test klicken
-  	<img width="1015" height="723" alt="image" src="https://github.com/user-attachments/assets/0ab8a0ba-33b5-4b19-992c-da4c34334914" />
+<br>
+<img width="1015" height="723" alt="image" src="https://github.com/user-attachments/assets/0ab8a0ba-33b5-4b19-992c-da4c34334914" /> <br>
+    <br>
 
-6. Dashboard laden und anlegen
-   auf "Dashboard" klicken
-   <img width="300" height="398" alt="image" src="https://github.com/user-attachments/assets/06e97afc-96da-49b1-a6ab-eb376fb94208" />
-
-    auf "Import Dashboard" klicken
-   <img width="1346" height="704" alt="image" src="https://github.com/user-attachments/assets/35a5c9d3-7dc4-42ac-98c5-9aaf3b2ba0c6" />
-    
-   auf "Upload JSON file" klicken
-   <img width="638" height="648" alt="image" src="https://github.com/user-attachments/assets/8eaf026f-04a6-49d3-8e28-3c509f5569d4" />
-
-    aus GitHub heruntergeladenen JSON auswählen
-    
-    Datenbank auswählen
-   <img width="622" height="529" alt="image" src="https://github.com/user-attachments/assets/bd134ff4-5eb2-4e5a-b9bc-f63ab7270fc6" />
-
-    auf "Frser-SQLite-datasource" klicken
-    <img width="611" height="232" alt="image" src="https://github.com/user-attachments/assets/fa665997-7697-4507-afa4-7c4aba5184be" />
-
-    auf "Import" klicken"
-    <img width="613" height="126" alt="image" src="https://github.com/user-attachments/assets/4ef474c6-8721-484a-9da0-efa17b18c260" />
-    
-
-   nach dem Import  des JSON wird das Dashboard zunächst noch ohne Daten geladen
-
-
-7. Anlagen in der Variable einstellen
-    ingeöffneten Dashboard auf "Edit" (oben rechts) klicken
-   <img width="262" height="88" alt="image" src="https://github.com/user-attachments/assets/67dab411-faa9-4e87-86b0-d858f5595dbf" />
-
-   auf "Settings" klicken
-   <img width="373" height="50" alt="image" src="https://github.com/user-attachments/assets/4ad7636b-0b79-4c14-acea-51c95d28c330" />
-
-   auf "Variables" klicken
-   <img width="689" height="183" alt="image" src="https://github.com/user-attachments/assets/2ae971ee-9311-44af-9b6c-9f94b2571206" />
-
-   auf "anlage_id" klicken
-   <img width="184" height="195" alt="image" src="https://github.com/user-attachments/assets/482d691d-e856-4b36-83d3-269abf881e60" />
-
-   in Query eingeben:
-   select installation_id from temperature_snapshots  
-   group by  installation_id
-
-   auf "Save Dashboard" klicken
-   <img width="1338" height="695" alt="image" src="https://github.com/user-attachments/assets/aed2897e-8139-46d6-b934-a335f498d290" />
-
-   zurück zum Dashboard
-   Anlage auswählen
-   <img width="174" height="26" alt="image" src="https://github.com/user-attachments/assets/cd7c43a6-a682-4983-9b37-0566f530d1a1" />
-
-
-    Jetzt wird das Dashboard mit den in Deiner Datenbank vorhandenen Werten gefüllt
-   
-
-8. Links einstellen
-   auf Edit --> Settings klicken
-   auf Links klicken
-   <img width="703" height="99" alt="image" src="https://github.com/user-attachments/assets/c25bdf79-535c-467a-a826-c5617e1300d6" />
-
-   Links einstellen 
-   <img width="1296" height="370" alt="image" src="https://github.com/user-attachments/assets/87b77771-deec-4723-b8ce-234901f0f23e" />
-
-   Hinweis:
-   Die Link-Adressen zu
-    - Events (vieventlog-Events)
-    - Kältekreislauf (vieventlog-Dashboard)
-    - Datenbank (Datenbank-Verwaltungstool)
-    - VICare (homeassistent)
-
-    müssen selbst händisch eingfügt werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden.
-
-9. Übrige Variable einstellen
-   Korrekturfaktor Strom
-   Start Wirtschaftsjahr
-   Zeitzone einstellen
-   gewünschtes Intervall auswählen
-
-10. Nutzer und Berechtigungen anlegen
-
-    Grafana Haupt-Menü öffnen
-    <img width="582" height="58" alt="image" src="https://github.com/user-attachments/assets/bc40e062-db82-4266-8c6d-c819082bd034" />
-
-    auf User und Access klicken und User anlegen
-    <img width="296" height="527" alt="image" src="https://github.com/user-attachments/assets/26fd6102-ccd7-41d2-81b1-f12151ccb386" />
-    
+6. Dashboard laden und anlegen <br>
+<br>
+   auf "Dashboard" klicken  <br>
+ <br>  
+   <img width="300" height="398" alt="image" src="https://github.com/user-attachments/assets/06e97afc-96da-49b1-a6ab-eb376fb94208" />  <br>
+<br>
+    auf "Import Dashboard" klicken   <br>
+    <br>
+   <img width="1346" height="704" alt="image" src="https://github.com/user-attachments/assets/35a5c9d3-7dc4-42ac-98c5-9aaf3b2ba0c6" /> <br>
+    <br>
+   auf "Upload JSON file" klicken <br>
+   <br>
+   <img width="638" height="648" alt="image" src="https://github.com/user-attachments/assets/8eaf026f-04a6-49d3-8e28-3c509f5569d4" /> <br>
+<br>
+    aus GitHub heruntergeladenen JSON auswählen <br>
+    <br>
+    Datenbank auswählen<br>
+    <br>
+   <img width="622" height="529" alt="image" src="https://github.com/user-attachments/assets/bd134ff4-5eb2-4e5a-b9bc-f63ab7270fc6" />  <br>
+<br>
+    auf "Frser-SQLite-datasource" klicken <br>
+    <br>
+    <img width="611" height="232" alt="image" src="https://github.com/user-attachments/assets/fa665997-7697-4507-afa4-7c4aba5184be" /> <br>
+<br>
+    auf "Import" klicken"<br>
+    <br>
+    <img width="613" height="126" alt="image" src="https://github.com/user-attachments/assets/4ef474c6-8721-484a-9da0-efa17b18c260" />  <br>
+    <br>
+<br>
+   nach dem Import  des JSON wird das Dashboard zunächst noch ohne Daten geladen   <br>
+<br>
+<br>
+7. Anlagen in der Variable einstellen <br>
+<br>
+    in geöffneten Dashboard auf "Edit" (oben rechts) klicken  <br>
+    <br>
+   <img width="262" height="88" alt="image" src="https://github.com/user-attachments/assets/67dab411-faa9-4e87-86b0-d858f5595dbf" /> <br>
+<br>
+   auf "Settings" klicken <br>
+   <img width="373" height="50" alt="image" src="https://github.com/user-attachments/assets/4ad7636b-0b79-4c14-acea-51c95d28c330" /> <br>
+<br>
+   auf "Variables" klicken<br>
+   <br>
+   <img width="689" height="183" alt="image" src="https://github.com/user-attachments/assets/2ae971ee-9311-44af-9b6c-9f94b2571206" />  <br>
+<br>
+   auf "anlage_id" klicken <br>
+   <br>
+   <img width="184" height="195" alt="image" src="https://github.com/user-attachments/assets/482d691d-e856-4b36-83d3-269abf881e60" />  <br>
+<br>
+   in Query eingeben:  <br>
+   <br>
+   select installation_id from temperature_snapshots group by  installation_id <br>
+<br>
+   auf "Save Dashboard" klicken <br>
+   <br>
+   <img width="1338" height="695" alt="image" src="https://github.com/user-attachments/assets/aed2897e-8139-46d6-b934-a335f498d290" /> <br>
+<br>
+   zurück zum Dashboard <br>
+   Anlage auswählen<br>
+   <br>
+   <img width="174" height="26" alt="image" src="https://github.com/user-attachments/assets/cd7c43a6-a682-4983-9b37-0566f530d1a1" /><br>
+<br>
+<br>
+    Jetzt wird das Dashboard mit den in Deiner Datenbank vorhandenen Werten gefüllt <br>
+   <br>
+<br>
+8. Links einstellen<br>
+   auf Edit --> Settings klicken<br>
+   <br>
+   auf Links klicken<br>
+   <br>
+   <img width="703" height="99" alt="image" src="https://github.com/user-attachments/assets/c25bdf79-535c-467a-a826-c5617e1300d6" /> <br>
+<br>
+   Links einstellen <br>
+   <br>
+   <img width="1296" height="370" alt="image" src="https://github.com/user-attachments/assets/87b77771-deec-4723-b8ce-234901f0f23e" /> <br>
+<br>
+   Hinweis: <br>
+   Die Link-Adressen zu<br>
+    - Events (vieventlog-Events) <br>
+    - Kältekreislauf (vieventlog-Dashboard)<br>
+    - Datenbank (Datenbank-Verwaltungstool) <br>
+    - VICare (homeassistent) <br>
+<br>
+    müssen selbst händisch eingfügt werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden. <br>
+<br>
+9. Übrige Variable einstellen<br>
+<br>
+  -  Korrekturfaktor Strom <br>
+  -  Start Wirtschaftsjahr <br>
+   - Zeitzone einstellen <br>
+    -gewünschtes Intervall auswählen <br>
+<br>
+10. Nutzer und Berechtigungen anlegen<br>
+<br>
+    Grafana Haupt-Menü öffnen<br>
+    <br>
+    <img width="582" height="58" alt="image" src="https://github.com/user-attachments/assets/bc40e062-db82-4266-8c6d-c819082bd034" /><br> 
+<br>
+    auf User und Access klicken und User anlegen<br>
+    <br>
+    <img width="296" height="527" alt="image" src="https://github.com/user-attachments/assets/26fd6102-ccd7-41d2-81b1-f12151ccb386" /> <br>
+    <br>
 
 ##  6.Lizenz und Haftungsbestimmungen / License & Disclaimer
-Deutschsprachige Version:
+Deutschsprachige Version: <br>
+<br>
 
 6.1 Nutzung von Grafana
 
@@ -422,7 +453,7 @@ Dieses Projekt steht in keiner Verbindung zu Grafana Labs und wird von diesem Un
 
 Alle Produkt- und Markennamen sind Eigentum ihrer jeweiligen Inhaber.
 
-Englischsprachige Version:
+English Version:
 
 1. Grafana Dependency
 
