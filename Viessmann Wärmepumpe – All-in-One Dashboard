@@ -1,0 +1,3190 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_FRSER-SQLITE-DATASOURCE",
+      "label": "frser-sqlite-datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "frser-sqlite-datasource",
+      "pluginName": "SQLite"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "frser-sqlite-datasource",
+      "name": "SQLite",
+      "version": "3.8.2"
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "12.3.2"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "state-timeline",
+      "name": "State timeline",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Events",
+      "tooltip": "Öffnen von vieventlo",
+      "type": "link",
+      "url": "http://192.168.178.3:5050"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Datenbank",
+      "tooltip": "Datenbank vieventlog öffnen",
+      "type": "link",
+      "url": "http://192.168.178.3:3000/"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Kältekreislauf",
+      "tooltip": "",
+      "type": "link",
+      "url": "http://192.168.178.3:5050/dashboard"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "ViCare",
+      "tooltip": "ViCare öffnen",
+      "type": "link",
+      "url": "http://192.168.178.3:8123"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "\r\n\r\nSELECT outside_temp as 'Aktuell' from temperature_snapshots_stat  where installation_id = 1234567 order by timestamp_mez desc Limit 1\r\n",
+          "queryType": "table",
+          "rawQueryText": "\r\n\r\nSELECT outside_temp as 'Aktuell' from temperature_snapshots_stat  where installation_id = ${anlage_id} order by timestamp_mez desc Limit 1\r\n",
+          "refId": "B",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Außentemperatur",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 53.5
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 55
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT dhw_temp as 'Warmwassertemperatur_aktuell' from temperature_snapshots_stat  where installation_id = 1234567 order by timestamp_mez desc Limit 1\n\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT dhw_temp as 'Warmwassertemperatur_aktuell' from temperature_snapshots_stat  where installation_id = ${anlage_id} order by timestamp_mez desc Limit 1\n\n",
+          "rawSql": "SELECT dhw_temp AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Warmwasser",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 55,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT buffer_temp as 'Aktuell' from temperature_snapshots_stat where installation_id = ${anlage_id} order by timestamp_mez desc Limit 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT buffer_temp as 'Aktuell' from temperature_snapshots_stat where installation_id = ${anlage_id} order by timestamp_mez desc Limit 1",
+          "rawSql": "SELECT compressor_power AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Pufferspeicher",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 42,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT thermal_power\nfrom temperature_snapshots_stat  \nwhere installation_id = ${anlage_id} order by timestamp_mez desc \nLimit 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT thermal_power\nfrom temperature_snapshots_stat  \nwhere installation_id = ${anlage_id} order by timestamp_mez desc \nLimit 1",
+          "rawSql": "SELECT compressor_power AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Wärmeleistung aktuell",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "manual"
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "Select  compressor_speed from temperature_snapshots_stat  where installation_id = 1234567 order by timestamp_mez desc limit 1",
+          "queryType": "table",
+          "rawQueryText": "Select  compressor_speed from temperature_snapshots_stat  where installation_id = ${anlage_id} order by timestamp_mez desc limit 1",
+          "rawSql": "SELECT compressor_active AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Kompressor aktuell",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 5.01
+              },
+              {
+                "color": "dark-red",
+                "value": 9
+              }
+            ]
+          },
+          "unit": "kelvin"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 20,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "Select timestamp_mez,hp_secondary_circuit_supply_temp - return_temp as 'Spreizung_calc' from temperature_snapshots_stat  where installation_id = 1234567 order by  timestamp_mez desc limit 1",
+          "queryType": "table",
+          "rawQueryText": "Select timestamp_mez,hp_secondary_circuit_supply_temp - return_temp as 'Spreizung_calc' from temperature_snapshots_stat  where installation_id = ${anlage_id} order by  timestamp_mez desc limit 1",
+          "rawSql": "SELECT CASE WHEN compressor_power>0 THEN thermal_power/compressor_power END AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Spreizung aktuell",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 0,
+          "displayName": "l/min",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 1100
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 1500
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 22,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "\nSelect\nvolumetric_flow,\n'l/min' as Unit\nfrom temperature_snapshots_stat  \nwhere installation_id = 1234567 \norder by timestamp_mez desc \nlimit 1",
+          "queryType": "table",
+          "rawQueryText": "\nSelect\nvolumetric_flow,\n'l/min' as Unit\nfrom temperature_snapshots_stat  \nwhere installation_id = ${anlage_id} \norder by timestamp_mez desc \nlimit 1",
+          "rawSql": "SELECT volumetric_flow AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Volumenstrom",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 3
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT elektrische_Leistung * 1.0 * 60 / sample_interval\r\n as 'Aktuell' from temperature_snapshots_stat  where installation_id = 1234567 order by timestamp_mez desc Limit 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT elektrische_Leistung * ${korrekturfaktor} * 60 / sample_interval\r\n as 'Aktuell' from temperature_snapshots_stat  where installation_id = ${anlage_id} order by timestamp_mez desc Limit 1",
+          "rawSql": "SELECT compressor_power AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Leistungsaufnahme aktuell",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "light-yellow",
+                "value": 2.5
+              },
+              {
+                "color": "dark-green",
+                "value": 2.98
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 20,
+        "y": 3
+      },
+      "id": 39,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^cop_aktuell$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT \nthermal_power /\n((elektrische_Leistung *${korrekturfaktor} * 60 / sample_interval)/1000) \nas 'cop_aktuell'\nFrom temperature_snapshots_stat\nwhere installation_id = ${anlage_id}\norder by timestamp_mez desc\nLimit 1\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT \nthermal_power /\n((elektrische_Leistung *${korrekturfaktor} * 60 / sample_interval)/1000) \nas 'cop_aktuell'\nFrom temperature_snapshots_stat\nwhere installation_id = ${anlage_id}\norder by timestamp_mez desc\nLimit 1\n",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "COP  aktuell",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 1.3
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 1.5
+              }
+            ]
+          },
+          "unit": "pressurebar"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 22,
+        "y": 3
+      },
+      "id": 65,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "queryText": "Select timestamp_mez,\npressure_supply from temperature_snapshots_stat\nwhere installation_id = 1234567 order by timestamp_mez desc \nlimit 1",
+          "queryType": "table",
+          "rawQueryText": "Select timestamp_mez,\npressure_supply from temperature_snapshots_stat\nwhere installation_id = ${anlage_id} order by timestamp_mez desc \nlimit 1",
+          "rawSql": "SELECT volumetric_flow AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Anlagendruck",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 4
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmin(outside_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and  installation_id = 1234567\n\n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmin(outside_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and  installation_id = ${anlage_id}\n\n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 2,
+        "y": 4
+      },
+      "id": 47,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmax(outside_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id}\n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmax(outside_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id}\n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 4,
+        "y": 4
+      },
+      "id": 48,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmin(dhw_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmin(dhw_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 6,
+        "y": 4
+      },
+      "id": 49,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmax(dhw_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = 1234567 \n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmax(dhw_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 4
+      },
+      "id": 58,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmin(buffer_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmin(buffer_temp) as 'Min' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 10,
+        "y": 4
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          },
+          "hide": false,
+          "queryText": "select \nmax(buffer_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n",
+          "queryType": "table",
+          "rawQueryText": "select \nmax(buffer_temp) as 'Max' from temperature_snapshots_stat where strftime('%F',timestamp_mez) = date('now', 'localtime') and installation_id = ${anlage_id} \n\n",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-red",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": 55,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\r\n  CAST(strftime('%s', timestamp, 'utc') AS INTEGER) AS time,\r\n  coalesce(cast(replace(hp_secondary_circuit_supply_temp,',', '.') as REAL), 0) * 1.0 AS Vorlauf,\r\n  return_temp AS Rücklauf,\r\n  coalesce(buffer_temp, 0) as Pufferspeicher,\r\n  coalesce(dhw_temp, 0) as Warmwasser,\r\n  coalesce(cast(replace(heating_circuit_1_supply_temp, ',', '.') as REAL), 0) * 1.0 as 'Heizkreis-Vorlauf'\r\nFROM temperature_snapshots_stat\r\nwhere  installation_id = 1234567 \r\nORDER BY time asc\r\n\r\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\r\n  CAST(strftime('%s', timestamp, 'utc') AS INTEGER) AS time,\r\n  coalesce(cast(replace(hp_secondary_circuit_supply_temp,',', '.') as REAL), 0) * 1.0 AS Vorlauf,\r\n  return_temp AS Rücklauf,\r\n  coalesce(buffer_temp, 0) as Pufferspeicher,\r\n  coalesce(dhw_temp, 0) as Warmwasser,\r\n  coalesce(cast(replace(heating_circuit_1_supply_temp, ',', '.') as REAL), 0) * 1.0 as 'Heizkreis-Vorlauf'\r\nFROM temperature_snapshots_stat\r\nwhere  installation_id = ${anlage_id} \r\nORDER BY time asc\r\n\r\n",
+          "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, supply_temp AS Vorlauf, return_temp AS Ruecklauf, outside_temp AS Aussen FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Vorlauf / Rücklauf / Heizkreis-Vorlauf / Pufferspeicher / Warmwasser",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "shades",
+            "seriesBy": "max"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": 55,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Stromverbrauch"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\r\n  CAST(strftime('%s', timestamp, 'utc') as integer) AS time,\r\n  coalesce(elektrische_Leistung,0) * 1.05 *60 / sample_interval AS Stromverbrauch,\r\n  coalesce (wärmeleistung, 0) *60 / sample_interval as Leistung\r\n  \r\nFROM temperature_snapshots_stat\r\nwhere  installation_id = 1234567 \r\nORDER BY time asc\r\n\r\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\r\n  CAST(strftime('%s', timestamp, 'utc') as integer) AS time,\r\n  coalesce(elektrische_Leistung,0) * ${korrekturfaktor} *60 / sample_interval AS Stromverbrauch,\r\n  coalesce (wärmeleistung, 0) *60 / sample_interval as Leistung\r\n  \r\nFROM temperature_snapshots_stat\r\nwhere  installation_id = ${anlage_id} \r\nORDER BY time asc\r\n\r\n",
+          "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, compressor_power AS Strom, thermal_power AS Waerme FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Stromverbrauch & Wärmeleistung",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "axisWidth": 55,
+            "fillOpacity": 100,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "F.1183": {
+                  "color": "transparent",
+                  "index": 9,
+                  "text": "Fehler"
+                },
+                "S.115": {
+                  "color": "dark-purple",
+                  "index": 2,
+                  "text": "WW"
+                },
+                "S.118": {
+                  "color": "dark-red",
+                  "index": 3,
+                  "text": "Heizen"
+                },
+                "S.123": {
+                  "color": "#808080",
+                  "index": 7,
+                  "text": "Aus"
+                },
+                "S.124": {
+                  "color": "dark-orange",
+                  "index": 6,
+                  "text": "Vorlauf"
+                },
+                "S.125": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "Heizen"
+                },
+                "S.128": {
+                  "color": "semi-dark-blue",
+                  "index": 1,
+                  "text": "Abtauen"
+                },
+                "S.129": {
+                  "color": "dark-blue",
+                  "index": 4,
+                  "text": "Nachlauf"
+                },
+                "S.134": {
+                  "color": "#808080",
+                  "index": 5,
+                  "text": "Leerlauf"
+                },
+                "i.74": {
+                  "color": "transparent",
+                  "index": 8,
+                  "text": "Info"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Events"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 67,
+      "options": {
+        "alignValue": "center",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "mergeValues": true,
+        "rowHeight": 0.5,
+        "showValue": "always",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_start ASC;\r\n\r\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_start ASC;\r\n\r\n",
+          "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, compressor_power AS Strom, thermal_power AS Waerme FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "timeEnd"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "Aus"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Ein"
+                },
+                "2": {
+                  "color": "text",
+                  "index": 2,
+                  "text": "n/a"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 22
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n   CASE\n       WHEN compressor_active = 1 THEN 1\n       WHEN compressor_active = 0 THEN 0\n       ELSE 2\n   END \nFROM temperature_snapshots_stat\nwhere  installation_id = 7654321 \nORDER BY timestamp_mez DESC\nLIMIT 1\n\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n   CASE\n       WHEN compressor_active = 1 THEN 1\n       WHEN compressor_active = 0 THEN 0\n       ELSE 2\n   END \nFROM temperature_snapshots_stat\nwhere  installation_id = ${anlage_id} \nORDER BY timestamp_mez DESC\nLIMIT 1\n\n",
+          "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, CASE WHEN compressor_power>0 THEN thermal_power/compressor_power END AS COP FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Kompressor",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "semi-dark-blue",
+                  "index": 0,
+                  "text": "Abtauen"
+                },
+                "2": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "Heizen"
+                },
+                "3": {
+                  "color": "dark-purple",
+                  "index": 2,
+                  "text": "Warmwasser"
+                },
+                "4": {
+                  "color": "text",
+                  "index": 3,
+                  "text": "Standby"
+                },
+                "5": {
+                  "color": "transparent",
+                  "index": 4,
+                  "text": "Aus"
+                },
+                "6": {
+                  "color": "transparent",
+                  "index": 5,
+                  "text": "n/a"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 22
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "WITH last_snapshot AS (\n    SELECT *\n    FROM temperature_snapshots_stat\n    WHERE installation_id = 1234567\n    ORDER BY timestamp_mez DESC\n    LIMIT 1\n)\n\nSELECT\n    datetime(substr(e.event_timestamp,1,19),'localtime') AS event_timestamp_mez,\n    e.error_code,\n\n    CASE\n        WHEN ls.volumetric_flow > 0 AND ls.compressor_active = 0                         THEN 4  -- Standby\n        WHEN ls.volumetric_flow = 0 AND ls.compressor_active = 0                         THEN 5  -- Aus\n\n        WHEN e.error_code IN ('S.127','S.128','S.135','S.176')\n             OR (ls.volumetric_flow >= 1630 AND ls.compressor_active = 1)                THEN 1  -- Abtauen\n\n        WHEN e.error_code IN ('S.118','S.124','S.125','S.129')\n             OR (ls.volumetric_flow BETWEEN 1400 AND 1630 AND ls.compressor_active = 1)  THEN 2  -- Heizen\n\n        WHEN e.error_code = 'S.115'\n             OR (ls.volumetric_flow < 1100 AND ls.compressor_active = 1)                 THEN 3  -- Warmwasser\n\n        ELSE 6                                                                                   -- n/a\n    END AS betriebsstatus_code,\n\n    ls.timestamp_mez AS snapshot_timestamp\n\nFROM events e\nCROSS JOIN last_snapshot ls\nWHERE e.error_code <> 'S.187'\n  AND e.active = 1\n  AND e.installation_id = 1234567\nORDER BY event_timestamp_mez DESC, e.error_code ASC\nLIMIT 1\n\n",
+          "queryType": "table",
+          "rawQueryText": "WITH last_snapshot AS (\n    SELECT *\n    FROM temperature_snapshots_stat\n    WHERE installation_id = ${anlage_id}\n    ORDER BY timestamp_mez DESC\n    LIMIT 1\n)\n\nSELECT\n    datetime(substr(e.event_timestamp,1,19),'localtime') AS event_timestamp_mez,\n    e.error_code,\n\n    CASE\n        WHEN ls.volumetric_flow > 0 AND ls.compressor_active = 0                         THEN 4  -- Standby\n        WHEN ls.volumetric_flow = 0 AND ls.compressor_active = 0                         THEN 5  -- Aus\n\n        WHEN e.error_code IN ('S.127','S.128','S.135','S.176')\n             OR (ls.volumetric_flow >= 1630 AND ls.compressor_active = 1)                THEN 1  -- Abtauen\n\n        WHEN e.error_code IN ('S.118','S.124','S.125','S.129')\n             OR (ls.volumetric_flow BETWEEN 1400 AND 1630 AND ls.compressor_active = 1)  THEN 2  -- Heizen\n\n        WHEN e.error_code = 'S.115'\n             OR (ls.volumetric_flow < 1100 AND ls.compressor_active = 1)                 THEN 3  -- Warmwasser\n\n        ELSE 6                                                                                   -- n/a\n    END AS betriebsstatus_code,\n\n    ls.timestamp_mez AS snapshot_timestamp\n\nFROM events e\nCROSS JOIN last_snapshot ls\nWHERE e.error_code <> 'S.187'\n  AND e.active = 1\n  AND e.installation_id = ${anlage_id}\nORDER BY event_timestamp_mez DESC, e.error_code ASC\nLIMIT 1\n\n",
+          "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, CASE WHEN compressor_power>0 THEN thermal_power/compressor_power END AS COP FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Betriebsmodus",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "color": "text",
+                  "index": 0,
+                  "text": "Standby"
+                },
+                "2": {
+                  "color": "dark-green",
+                  "index": 1,
+                  "text": "Heizen"
+                },
+                "3": {
+                  "color": "#04040400",
+                  "index": 2,
+                  "text": "Aus"
+                },
+                "4": {
+                  "color": "transparent",
+                  "index": 3,
+                  "text": "n/a"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 22
+      },
+      "id": 45,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "\nSelect  \ncase \n     when secondary_heat_generator_status = 'standby' then 1\n     when secondary_heat_generator_status = 'heating' then 2\n     when secondary_heat_generator_status is NULL then 4\n     else 3\n     END \n     as Zusatzheizung\n     \nfrom temperature_snapshots_stat where installation_id = 1234567  order by timestamp_mez desc limit 1",
+          "queryType": "table",
+          "rawQueryText": "\nSelect  \ncase \n     when secondary_heat_generator_status = 'standby' then 1\n     when secondary_heat_generator_status = 'heating' then 2\n     when secondary_heat_generator_status is NULL then 4\n     else 3\n     END \n     as Zusatzheizung\n     \nfrom temperature_snapshots_stat where installation_id = ${anlage_id}  order by timestamp_mez desc limit 1",
+          "rawSql": "SELECT volumetric_flow AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "externe Heizung",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 6,
+        "y": 22
+      },
+      "id": 66,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^runtime_hhmm$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT timestamp_mez, SUM(compressor_active * sample_interval) * 60 as Sekunden, \n    installation_id,\n    strftime('%Y-%m-%d', timestamp_mez) AS day,\n    substr(time(SUM(compressor_active * sample_interval) * 60, 'unixepoch' ), 1, 5) AS runtime_hhmm\nFROM temperature_snapshots_stat\nWHERE installation_id = 1234567  -- Grafana ersetzt automatisch\nGROUP BY day\nORDER BY day desc\nLIMIT 1\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT timestamp_mez, SUM(compressor_active * sample_interval) * 60 as Sekunden, \n    installation_id,\n    strftime('%Y-%m-%d', timestamp_mez) AS day,\n    substr(time(SUM(compressor_active * sample_interval) * 60, 'unixepoch' ), 1, 5) AS runtime_hhmm\nFROM temperature_snapshots_stat\nWHERE installation_id = ${anlage_id}  -- Grafana ersetzt automatisch\nGROUP BY day\nORDER BY day desc\nLIMIT 1\n",
+          "rawSql": "SELECT volumetric_flow AS value FROM temperature_snapshots_grafana where installation_id = '7654321' ORDER BY timestamp DESC LIMIT 1",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Laufzeit heute",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 22
+      },
+      "id": 61,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "Select strftime('%d.%m.%g', timestamp_mez) as 'Tag', strftime('%R', timestamp_mez) as 'Uhrzeit'\nfrom temperature_snapshots_stat\nwhere installation_id = 1234567 \norder by timestamp_mez desc\nLimit 1",
+          "queryType": "table",
+          "rawQueryText": "Select strftime('%d.%m.%g', timestamp_mez) as 'Tag', strftime('%R', timestamp_mez) as 'Uhrzeit'\nfrom temperature_snapshots_stat\nwhere installation_id = ${anlage_id} \norder by timestamp_mez desc\nLimit 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "letztes Update",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "shades"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Waerme"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 10,
+        "y": 22
+      },
+      "id": 20,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.6,
+        "fullHighlight": false,
+        "groupWidth": 1,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "vertical",
+        "showValue": "auto",
+        "stacking": "normal",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "xField": "weekday",
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\r\n strftime('%d.%m', timestamp_mez) as 'Datum',\r\n \r\n  SUM(elektrische_Leistung * 1.0) / 1000 AS Strom,\r\n  SUM(Wärmeleistung) / 1000 AS Waerme\r\nFROM temperature_snapshots_stat\r\nwhere  strftime('%F', timestamp_mez) <= strftime('%F', datetime(1769650476767 / 1000, 'unixepoch', 'localtime'))\r\nand installation_id = 1234567 \r\nGROUP BY strftime('%F', timestamp_mez)\r\nORDER BY strftime('%F', timestamp_mez) desc\r\nLimit 14",
+          "queryType": "table",
+          "rawQueryText": "SELECT\r\n strftime('%d.%m', timestamp_mez) as 'Datum',\r\n \r\n  SUM(elektrische_Leistung * ${korrekturfaktor}) / 1000 AS Strom,\r\n  SUM(Wärmeleistung) / 1000 AS Waerme\r\nFROM temperature_snapshots_stat\r\nwhere  strftime('%F', timestamp_mez) <= strftime('%F', datetime($__to / 1000, 'unixepoch', 'localtime'))\r\nand installation_id = ${anlage_id} \r\nGROUP BY strftime('%F', timestamp_mez)\r\nORDER BY strftime('%F', timestamp_mez) desc\r\nLimit 14",
+          "rawSql": "SELECT SUM(CASE WHEN compressor_active=1 AND LAG(compressor_active) OVER (ORDER BY timestamp)=0 THEN 1 ELSE 0 END) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Energieverteilung der letzten 14 Tage",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "fixed"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "unit": "kwatth"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tagesstromverbrauch"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 18,
+        "y": 22
+      },
+      "id": 30,
+      "options": {
+        "displayLabels": [
+          "percent",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": []
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "sort": "desc",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\r\n    sum(Wärmeleistung / 1000) as 'Tageswärmeleistung',\r\n   sum(elektrische_Leistung / 1000 * 1.05) as 'Tagesstromverbrauch'\r\n\r\n  \r\nFrom temperature_snapshots_stat\r\nwhere  installation_id = 1234567 \r\ngroup by strftime('%F', timestamp_mez)\r\norder by installation_id desc, strftime('%F', timestamp_mez) desc\r\nLimit 1\r\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\r\n    sum(Wärmeleistung / 1000) as 'Tageswärmeleistung',\r\n   sum(elektrische_Leistung / 1000 * ${korrekturfaktor}) as 'Tagesstromverbrauch'\r\n\r\n  \r\nFrom temperature_snapshots_stat\r\nwhere  installation_id = ${anlage_id} \r\ngroup by strftime('%F', timestamp_mez)\r\norder by installation_id desc, strftime('%F', timestamp_mez) desc\r\nLimit 1\r\n",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', strftime('%Y-%m',timestamp)=strftime('Y-%m','now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Energieverteilung heute",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 24
+              },
+              {
+                "color": "dark-red",
+                "value": 48
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 24
+      },
+      "id": 38,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "Select \nSum( Case\n   when compressor_ein_aus > 0 then 1\n    else 0\n    end) as 'Kompressorstarts'\n\n\nFROM \"temperature_snapshots_takte_heute\"\nwhere installation_id = 1234567\ngroup by strftime('%F', timestamp_mez)\norder by timestamp_mez desc\nLimit 1",
+          "queryType": "table",
+          "rawQueryText": "Select \nSum( Case\n   when compressor_ein_aus > 0 then 1\n    else 0\n    end) as 'Kompressorstarts'\n\n\nFROM \"temperature_snapshots_takte_heute\"\nwhere installation_id = ${anlage_id}\ngroup by strftime('%F', timestamp_mez)\norder by timestamp_mez desc\nLimit 1",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "dashed"
+            }
+          },
+          "decimals": 2,
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 2.5
+              },
+              {
+                "color": "dark-green",
+                "value": 2.98
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 25
+      },
+      "id": 40,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.5,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n      strftime('%d.%m', timestamp_mez) as 'Datum',\n      CASE strftime('%w', timestamp_mez)\n        WHEN '0' THEN 'So'\n        WHEN '1' THEN 'Mo'\n        WHEN '2' THEN 'Di'\n        WHEN '3' THEN 'Mi'\n        WHEN '4' THEN 'Do'\n        WHEN '5' THEN 'Fr'\n        WHEN '6' THEN 'Sa'\n    END AS Wochentag,\n\n    -- Tages-COP\n    sum(Wärmeleistung) / 1000\n    / (sum(elektrische_Leistung * 1.07) / 1000) AS Tages_AZ\nFROM temperature_snapshots_stat T1\n\n-- optional: auch die Anzeige erst ab Startdatum\nWHERE strftime('%F', timestamp_mez) <= strftime('%F', datetime(1769930839587 / 1000, 'unixepoch', 'localtime'))\nand installation_id = 1234567 \n\nGROUP BY strftime('%F', timestamp_mez)\nORDER BY strftime('%F', timestamp_mez) desc\nLimit 14\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n      strftime('%d.%m', timestamp_mez) as 'Datum',\n      CASE strftime('%w', timestamp_mez)\n        WHEN '0' THEN 'So'\n        WHEN '1' THEN 'Mo'\n        WHEN '2' THEN 'Di'\n        WHEN '3' THEN 'Mi'\n        WHEN '4' THEN 'Do'\n        WHEN '5' THEN 'Fr'\n        WHEN '6' THEN 'Sa'\n    END AS Wochentag,\n\n    -- Tages-COP\n    sum(Wärmeleistung) / 1000\n    / (sum(elektrische_Leistung * ${korrekturfaktor}) / 1000) AS Tages_AZ\nFROM temperature_snapshots_stat T1\n\n-- optional: auch die Anzeige erst ab Startdatum\nWHERE strftime('%F', timestamp_mez) <= strftime('%F', datetime($__to / 1000, 'unixepoch', 'localtime'))\nand installation_id = ${anlage_id} \n\nGROUP BY strftime('%F', timestamp_mez)\nORDER BY strftime('%F', timestamp_mez) desc\nLimit 14\n",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', strftime('%Y-%m',timestamp)=strftime('Y-%m','now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Tagesarbeitszahl der letzten 14 Tage",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 2.5
+              },
+              {
+                "color": "dark-green",
+                "value": 2.98
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 8,
+        "y": 26
+      },
+      "id": 44,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n   sum(Wärmeleistung) / sum(elektrische_Leistung * 1.0)\n       \nFrom temperature_snapshots_stat\nwhere  installation_id = 1234567 \ngroup by strftime('%F', timestamp_mez)\norder by timestamp_mez desc\nLimit 1\n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n   sum(Wärmeleistung) / sum(elektrische_Leistung * ${korrekturfaktor})\n       \nFrom temperature_snapshots_stat\nwhere  installation_id = ${anlage_id} \ngroup by strftime('%F', timestamp_mez)\norder by timestamp_mez desc\nLimit 1\n",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "TAZ - Heute",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 2.5
+              },
+              {
+                "color": "dark-green",
+                "value": 2.98
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 8,
+        "y": 29
+      },
+      "id": 46,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n \n         sum(Wärmeleistung / 1000) /\n         sum(elektrische_Leistung / 1000 * 1.0)\n          \nFROM temperature_snapshots_stat \nWHERE strftime('%F', timestamp_mez) >= \n  substr('16.12.2025', 7,4) || '-' || \n  substr('16.12.2025', 4,2) || '-' || \n  substr('16.12.2025', 1,2)\nand installation_id = 1234567 \n",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n \n         sum(Wärmeleistung / 1000) /\n         sum(elektrische_Leistung / 1000 * ${korrekturfaktor})\n          \nFROM temperature_snapshots_stat \nWHERE strftime('%F', timestamp_mez) >= \n  substr('${start_wirtschaftsjahr}', 7,4) || '-' || \n  substr('${start_wirtschaftsjahr}', 4,2) || '-' || \n  substr('${start_wirtschaftsjahr}', 1,2)\nand installation_id = ${anlage_id} \n",
+          "rawSql": "SELECT (MAX(thermal_energy)-MIN(thermal_energy))/(MAX(electrical_energy)-MIN(electrical_energy)) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "JAZ WJ",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 2.5
+              },
+              {
+                "color": "dark-green",
+                "value": 2.98
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 8,
+        "y": 32
+      },
+      "id": 64,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Arbeitszahl$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "\nSELECT \n        CASE\n        when 'Monat' = 'Monat'\n        then strftime('%Y-%m', timestamp_mez)\n        else strftime('%Y', timestamp_mez)\n        END AS periode,\n\n    sum(Wärmeleistung / 1000) / (sum(elektrische_Leistung / 1000 * 1.0)) AS 'Arbeitszahl'\n\n    FROM temperature_snapshots_stat\n\n    WHERE installation_id = 1234567\n    AND (\n    (\n     'Monat' = 'Monat'\n     AND strftime('%Y-%m', timestamp_mez) = \n     strftime('%Y-%m', datetime(1770714608029 / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n     'Monat' <> 'Monat'\n     AND strftime('%Y', timestamp_mez) =\n     strftime('%Y', datetime(1770714608029 / 1000, 'unixepoch', 'localtime'))\n    )\n    )\n    \nGROUP BY periode\nORDER BY periode DESC\nLimit 1",
+          "queryType": "table",
+          "rawQueryText": "\nSELECT \n        CASE\n        when ${granularity} = 'Monat'\n        then strftime('%Y-%m', timestamp_mez)\n        else strftime('%Y', timestamp_mez)\n        END AS periode,\n\n    sum(Wärmeleistung / 1000) / (sum(elektrische_Leistung / 1000 * ${korrekturfaktor})) AS 'Arbeitszahl'\n\n    FROM temperature_snapshots_stat\n\n    WHERE installation_id = ${anlage_id}\n    AND (\n    (\n     ${granularity} = 'Monat'\n     AND strftime('%Y-%m', timestamp_mez) = \n     strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n     ${granularity} <> 'Monat'\n     AND strftime('%Y', timestamp_mez) =\n     strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    )\n    \nGROUP BY periode\nORDER BY periode DESC\nLimit 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "MAZ lfd. Monat",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 10,
+        "y": 32
+      },
+      "id": 63,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\n  sum(elektrische_leistung / 1000 * ${korrekturfaktor})\n/\nCASE\n  WHEN ${granularity} = 'Monat' THEN\n    (\n      julianday(max(timestamp_mez))\n      - julianday(date(max(timestamp_mez)))\n      - 1\n      + cast(strftime('%d', max(timestamp_mez)) AS real)\n    )\n  ELSE\n    (\n      julianday(max(timestamp_mez))\n      - julianday(date(max(timestamp_mez), 'start of year'))\n    )\nEND\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\nORDER BY periode DESC\nLIMIT 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\n  sum(elektrische_leistung / 1000 * ${korrekturfaktor})\n/\nCASE\n  WHEN ${granularity} = 'Monat' THEN\n    (\n      julianday(max(timestamp_mez))\n      - julianday(date(max(timestamp_mez)))\n      - 1\n      + cast(strftime('%d', max(timestamp_mez)) AS real)\n    )\n  ELSE\n    (\n      julianday(max(timestamp_mez))\n      - julianday(date(max(timestamp_mez), 'start of year'))\n    )\nEND\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\nORDER BY periode DESC\nLIMIT 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "KWh / Tag (lfd. Monat)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 13,
+        "y": 32
+      },
+      "id": 62,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n    periode,\n    SUM(day_inactive) AS inactive_days\nFROM (\n    SELECT \n        CASE\n        when 'Monat' = 'Monat'\n        then strftime('%Y-%m', timestamp_mez)\n        else strftime('%Y', timestamp_mez)\n        END AS periode,\n\n    strftime('%Y-%m-%d', timestamp_mez) AS day,\n\n        CASE\n            WHEN SUM(compressor_active) > 0 THEN 0\n            ELSE 1\n        END AS day_inactive\n\n    FROM temperature_snapshots_stat\n\n    WHERE installation_id = 1234567\n    AND (\n    (\n     'Monat' = 'Monat'\n     AND strftime('%Y-%m', timestamp_mez) = \n     strftime('%Y-%m', datetime(1770714870182 / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n     'Monat' <> 'Monat'\n     AND strftime('%Y', timestamp_mez) =\n     strftime('%Y', datetime(1770714870182 / 1000, 'unixepoch', 'localtime'))\n    )\n    )\n    group by periode, day\n   ) \nGROUP BY periode\nORDER BY periode DESC\nLimit 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n    periode,\n    SUM(day_inactive) AS inactive_days\nFROM (\n    SELECT \n        CASE\n        when ${granularity} = 'Monat'\n        then strftime('%Y-%m', timestamp_mez)\n        else strftime('%Y', timestamp_mez)\n        END AS periode,\n\n    strftime('%Y-%m-%d', timestamp_mez) AS day,\n\n        CASE\n            WHEN SUM(compressor_active) > 0 THEN 0\n            ELSE 1\n        END AS day_inactive\n\n    FROM temperature_snapshots_stat\n\n    WHERE installation_id = ${anlage_id}\n    AND (\n    (\n     ${granularity} = 'Monat'\n     AND strftime('%Y-%m', timestamp_mez) = \n     strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n     ${granularity} <> 'Monat'\n     AND strftime('%Y', timestamp_mez) =\n     strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    )\n    group by periode, day\n   ) \nGROUP BY periode\nORDER BY periode DESC\nLimit 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Tage ohne Laufzeit",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 32
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\nsum(elektrische_leistung / 1000 * ${korrekturfaktor}) AS 'Monatsstromverbrauch'\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\nORDER BY periode DESC\nLIMIT 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\nsum(elektrische_leistung / 1000 * ${korrekturfaktor}) AS 'Monatsstromverbrauch'\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\nORDER BY periode DESC\nLIMIT 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Leistungsaufnahme (lfd. Monat)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 32
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "queryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\nsum(Wärmeleistung / 1000) AS 'Monatswärmeleistung'\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\n\nORDER BY periode DESC\nLIMIT 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n  CASE\n    WHEN ${granularity} = 'Monat'\n      THEN strftime('%Y-%m', timestamp_mez)\n    ELSE strftime('%Y', timestamp_mez)\n  END AS periode,\n\nsum(Wärmeleistung / 1000) AS 'Monatswärmeleistung'\n\nFROM temperature_snapshots_stat\n\nWHERE installation_id = ${anlage_id}\n  AND (\n    (\n      ${granularity} = 'Monat'\n      AND strftime('%Y-%m', timestamp_mez) =\n               strftime('%Y-%m', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n    OR\n    (\n      ${granularity} <> 'Monat' \n      AND strftime('%Y', timestamp_mez) = \n               strftime('%Y', datetime($__to / 1000, 'unixepoch', 'localtime'))\n    )\n  )\n\nGROUP BY periode\n\nORDER BY periode DESC\nLIMIT 1",
+          "rawSql": "SELECT MAX(compressor_hours)-MIN(compressor_hours) AS value FROM temperature_snapshots_grafana WHERE installation_id = '7654321', date(timestamp)=date('now')",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ],
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "${DS_FRSER-SQLITE-DATASOURCE}"
+          }
+        }
+      ],
+      "title": "Wärmeleistung (lfd. Monat)",
+      "type": "stat"
+    }
+  ],
+  "preload": false,
+  "refresh": "30s",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "1.0",
+          "value": "1.0"
+        },
+        "description": "Korrekturfaktor Strom",
+        "label": "Korrekturfaktor Strom",
+        "name": "korrekturfaktor",
+        "options": [
+          {
+            "selected": true,
+            "text": "1.0",
+            "value": "1.0"
+          }
+        ],
+        "query": "1.0",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "16.12.2025",
+          "value": "16.12.2025"
+        },
+        "description": "Startdatum Wirtschaftsjahr",
+        "label": "Start Wirtschaftsjahr",
+        "name": "start_wirtschaftsjahr",
+        "options": [
+          {
+            "selected": true,
+            "text": "16.12.2025",
+            "value": "16.12.2025"
+          }
+        ],
+        "query": "16.12.2025",
+        "type": "textbox"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "select installation_id from temperature_snapshots  group by installation_id",
+        "description": "Auswahl Anlage",
+        "label": "Anlage",
+        "name": "anlage_id",
+        "options": [],
+        "query": "select installation_id from temperature_snapshots  group by installation_id",
+        "refresh": 1,
+        "regex": "",
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "'Monat'",
+          "value": "'Monat'"
+        },
+        "label": "Monat/Jahr",
+        "name": "granularity",
+        "options": [
+          {
+            "selected": true,
+            "text": "'Monat'",
+            "value": "'Monat'"
+          },
+          {
+            "selected": false,
+            "text": "'Jahr'",
+            "value": "'Jahr'"
+          }
+        ],
+        "query": "'Monat', 'Jahr'",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Berlin",
+  "title": "Viessmann Wärmepumpe – All-in-One Dashboard",
+  "uid": "viessmann-all-in-one",
+  "version": 464,
+  "weekStart": ""
+}
