@@ -150,7 +150,7 @@ SELECT  <br>
           WHEN error_code in ('S.118')                       THEN 'S.125'   <br> 
           WHEN error_code in ('S.127', 'S.135', 'S.176')     THEN 'S.128'   <br>
   ELSE error_code <br>
-  END <br>
+  END AS 'betriebszustand' <br>
   
 FROM events <br>
 WHERE active = 1 AND  <br>
