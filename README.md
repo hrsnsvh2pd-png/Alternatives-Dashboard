@@ -39,29 +39,32 @@ Matthias Schneider hat mit sehr viel Herzblut vientlog geschaffen – und mit di
 
 Dies war meine Motivation. 
 
-Die wesentlichen Änderungen betreffen neben einigen zusätzlichen für meine Bedürfnisse erforderlichen Feldern (insbes. Anzahl Kompressorstarts des lfd. Tages,Tage ohne Kompressorlaufzeit (ich nutze Solarthermie), Stromverbrauch pro Tag) insbesondere 3 wesentliche Punkte:<br>
+Die wesentlichen Änderungen meines Dashboards gegenüber dem in vieventlog implementierten betreffen neben einigen zusätzlichen für meine Bedürfnisse erforderlichen Feldern (insbes. Anzahl Kompressorstarts des lfd. Tages, Tage ohne Kompressorlaufzeit (ich nutze Solarthermie), Stromverbrauch pro Tag) insbesondere 4 wesentliche Punkte:<br>
 <br>
-a) Integration der Events-Timeline in ein Gesamt-Dashboard mit Sensor-/Statistikwerten und Betriebsdaten/-verläufen <br>
+a) synchrone Integration der Events-Timeline in ein Gesamt-Dashboard mit Sensor-/Statistikwerten und Betriebsdaten/-verläufen <br>
 <br>
 b) Alertsystem mittels Ampellogik über Schwellwerte wo immer möglich und sinnvoll<br>
 <br>
 c) ökonomische Effizienzeinschätzung mittels Ampellogik über Schwellwerte<br>
 <br>
-    Der Vergleich der jährlichen laufenden Mehr-/Minderkosten einer Wärmepumpe wird wesentlich durch das    
+    Anmerkung <br>
+    Der Vergleich der jährlichen, laufenden Mehr-/Minderkosten einer Wärmepumpe wird wesentlich durch das    
     Verhältnis Strom- zu Gaspreis pro KW/h beeinflusst. Und dies auch, wenn man nicht wie ich, den 
     vorhandenen Gasbrenner als externe Heizquelle weiter nutzt. Die Gasanbieter rechnen den Verbrauch von 
     Kubikmeter in KW/h um. Abgerechnet wird am Zähler, sowohl Strom- als auch Gaspreis wird je KW/h berechnet;
     eine KW/h ist kostenmäßig eine KW/h. 
     Damit ist die Jahreszahl (Kalenderjahr) ein sehr guter Indikator für die ökonomische Effizienz einer 
     Wärmepumpe: Liegt die (ehrliche) JAZ über dem Arbeitspreis-Verhältnis von Strom- zu Gas (bei uns ab 
-    1.1.2026 = 2,98 ist das ein sehr guter Indikator dafür, dass die Wärmepumpe wahrscheinlich kostengünstiger 
+    1.1.2026 = 2,98) ist das ein sehr guter Indikator dafür, dass die Wärmepumpe wahrscheinlich kostengünstiger 
     als ein Gasbrenner ist.<br>
     <br>
-d) Aus meiner beruflichen Erfahrung weiß ich, dass eigentlich jeder Nutzer seine eigenen Vorstellungen bezüglich Statistik und Dashboard hat. Deshalb habe ich das alternative Dashboard auf der Grafana-Plattform (OSS) entwickelt. Jeder Nutzer kann es auf dieser Plattform nach seinen Wünschen und Vorstellungn individuell ändern bzw. anpassen.
+d) Aus meiner beruflichen Erfahrung weiß ich, dass eigentlich jeder Nutzer seine eigenen Vorstellungen bezüglich Statistik und Dashboard hat. Deshalb habe ich das alternative Dashboard auf der Grafana-Plattform (OSS) entwickelt. Jeder Nutzer kann es auf dieser Plattform nach seinen Wünschen und Vorstellungen individuell ändern bzw. anpassen.
 
-Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf viebentlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. <br>
+Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf vieventlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. <br>
 <br>
-Die mit ausgelieferte Datei "Alternatives Dashboard Vxy.pdf" enthält Hinweise zur Nutzung des Dashboards sowie einen Leitfaden zur Installation von Grafana sowie zum Laden und zur Einrichtung des Dashboards in Grafana.<br>
+Die mit ausgelieferte Datei "Alternatives Dashboard Vnn.pdf" enthält Hinweise zur Nutzung des Dashboards sowie einen Leitfaden zur Installation von Grafana unter Windows sowie zum Laden und zur Einrichtung des Dashboards in Grafana (OSS).<br>
+<br>
+Das Laden und die Einrichtung des Dashboards unter Grafana (OSS) ist im übrigen unabhängig von der Systemplattform, auf der Grafana (OSS) läuft. <br>
 
 
 ## 2. Mein Use Case
@@ -70,23 +73,24 @@ Die mit ausgelieferte Datei "Alternatives Dashboard Vxy.pdf" enthält Hinweise z
 <br>
 <br>
 
-Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus errreichbar (separeate Linkbuttons für Events und Dashboard/Kältekreislauf). 
+Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus errreichbar (separate Linkbuttons für Events und Dashboard/Kältekreislauf). 
 
-Vieventlog fungiert für mich unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events undSnapshots) sowie punktuell für vertiefte und Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statitikwerte. Es wird ohnehin zwingend zur Einstellung der API-Call-Intervalle (Event und Snapshots) benötigt. Unverzichtbar ist für mich auußerdem die Kältekreislauf-Visualisierung und Einordnung des Heizkreis-Vorlauf-Wertes bei herrschender Auißentemperaturn in der Heizkurve. Und da das Dashboard ausschließlich die Wärmepumpe im Fokus hat, ist es ohnehin für die Information bezüglich Smart Client-Geräte, Vitoevent-Systeme und Vitocharge-Geräte unabdingbar.
+Vieventlog fungiert für mich unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events und Snapshots) sowie punktuell für vertiefte bzw. Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statitikwerte, etc.. Es wird ohnehin zwingend für die Konto_Verwaltung (inbes. Verbindung zur Datenbank, API-Call-Intervalle (Event und Snapshots) und Daten-Aufbewahrungsfristen) sowie für die Geräteeinstellungen benötigt. <br>
+Unverzichtbar ist für mich außerdem die Kältekreislauf-Visualisierung und Einordnung des Heizkreis-Vorlauf-Wertes bei herrschender Außentemperaturn in der Heizkurve. Und da das Dashboard ausschließlich die Wärmepumpe im Fokus hat, ist es ohnehin für die Information bezüglich Smart Client-Geräte, Vitoevent-Systeme und Vitocharge-Geräte unabdingbar.
 
-Desweiteren nutze ich VICare (Homeassistant) als Alternative zur VICare-App (auf Windows-PC) - ins besondere auch, wenn die VICare-App nicht verfügbar ist und ich Einstllungen bei meiner Wärmepumpe ändern muss. 
+Desweiteren nutze ich VICare (Homeassistant) als Alternative zur VICare-App (auf Windows-PC) - insbesondere auch, wenn die VICare-App nicht verfügbar ist und ich Einstellungen bei meiner Wärmepumpe ändern muss (häufig funktioniert die API-Verbindung noch, wenn die App ausgefallen ist). 
 
-Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehemen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Dataenbankmanagement-Tool, das ebenfalls auf meiner Synology-Daenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool iat aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser für SQLite, das auch für macOS und die meisten Versionen von Linux und Unix verfügbar ist (https://sqlitebrowser.org/). 
+Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehemen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Datenbankmanagement-Tool, das ebenfalls auf meiner Synology-Datenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool iat aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser für SQLite, das auch für macOS und die meisten Versionen von Linux und Unix verfügbar ist (https://sqlitebrowser.org/). 
 
-Alle Links können nachI nstallation über die Grafana-Oberfläche angepasst oder ggf. gelöscht werden. Selbstverständlich können auch neue Links ergänzt werden. 
+Alle Links können nach der Installation über die Grafana-Oberfläche angepasst oder ggf. gelöscht werden. Selbstverständlich können auch neue Links ergänzt werden. 
 
 ## 3. Vorbereitende Massnahmen: Erzeugen von 3 logischen Views in der Datenbank viessmann_events.db
 
-Um das über den bereitgestellten JSON gelieferte Dashboard nutzen zu können, müssen 3 logische Views in der Datenbank viessmann_events.db erzeugt werden. Dies kann über eines der vorstehend genannten Datenbankmanagement-Tools ganz einfach über die Eingabe und Ausführung der nachsehenden SQL-Statements erfolgen. 
+Um das über den bereitgestellten JSON gelieferte Dashboard nutzen zu können, müssen 3 logische Views in der Datenbank viessmann_events.db erzeugt werden. Dies kann über eines der vorstehend genannten Datenbankmanagement-Tools ganz einfach durch Eingabe und Ausführung der nachsehenden SQL-Statements im Datenbankmanagement-Tool erfolgen. 
 
 a) temperature_snapshot.stat  <br>
 <br>
-Diese View dient der Umstellung der Timestamps auf ISO 8601 und auf 'localtime', da ich andernfalls nicht die erforderliche Zeitzonenproblematik (arbeiten mit deutscher Zeit auch in einer anderen Zeitzone) hinbekommen habe und vorbereitende Brechnungen für Stromverbrauch, Wärmeleistung und Laufzeit.
+Diese View dient der Umstellung der Timestamps auf ISO 8601 und auf 'localtime', da ich andernfalls nicht die erforderliche Zeitzonenproblematik (arbeiten mit deutscher Zeit auch in einer anderen Zeitzone) hinbekommen habe sowie vorbereitenden Berechnungen für Stromverbrauch, Wärmeleistung und Laufzeit.
 
 CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as <br>
       SELECT datetime(substr(timestamp, 1, 19), 'localtime') <br>
@@ -106,7 +110,7 @@ CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as <br>
 <br>
 b) temperature_snapshots_takte heute  <br>
 <br>
-Diese View dient der Erkennung von Ein-/Ausschaltung des Kompressors zur Berechnung der Kompressorstarts des laufenden Tages ("Vorlesen" des Kompressorzustandes im zeitlich nachgelegerten Datensatz und übertragung des kommenden Status in den gerade berarbeiteten Datensatz)
+Diese View dient der Erkennung von Ein-/Ausschaltvorgängen des Kompressors zur Berechnung der Kompressorstarts des laufenden Tages ("Vorlesen" des Kompressorzustandes im zeitlich nachgelegerten Datensatz und Übertragung des kommenden Status in den gerade berarbeiteten Datensatz)
 
 CREATE VIEW IF NOT EXISTS<br>
  'temperature_snapshots_takte_heute' <br>
@@ -121,7 +125,7 @@ CREATE VIEW IF NOT EXISTS<br>
 <br>
 c) event_betriebszustand_timeline  <br>
 <br>
-Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mappingeinzelner Events auf bestimmte Betriebszustände <br>
+Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mapping einzelner Events auf bestimmte Betriebszustände <br>
 <br>
 CREATE VIEW 'event_betriebszustand_timeline' as <br>
 SELECT  <br>
@@ -157,16 +161,26 @@ WHERE active = 1 AND  <br>
 error_code <> 'S.187'   <br>
 <br>
 <br>
+
+Hinweis: Das hier vorgenommene Mapping muss ggf. an Eure Installation und Daten angepasst werden. Welche Events (in der Datenbank: error_codes) in Eurer Installation verwendet werden, könnt Ihr durch eine einfache SQL-Abfrage auf die Tabelle Events in Eurem Datenbankmanagent-Tool erfahren:  <br>
+ <br>
+SELECT error_code, error_description, human_readable <br>
+from events <br>
+group by error_code <br>
+order by error_code <br>
+<br>
+
 ## 4. Installation von Grafana
 
-Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgeäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windowas-PC unter Windows 11 installiert. Ich habe aufgrund der Verbreitung im beiligenden pdf-Dokuement die Installation unter Windows ausführlich beeschrieben. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. 
+Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgemäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windows-PC unter Windows 11 installiert. Ich habe aufgrund der Verbreitung im beiligenden pdf-Dokuement die Grafana-Installation und -Einrichtung unter Windows ausführlich beschrieben. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. 
 
-Die ausführliche Installation unter Windows ist auch auf den Seten 14 - 25 in beiliegenden pdf-Dokument beschrieben
+Die ausführliche Installation und Einrichtung unter Windows ist auch auf den Seten 14 - 25 in beiliegenden pdf-Dokument beschrieben.
+
 
 ### Windows<br>
 1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: (https://grafana.com/get/)<br>
 <br>
-Achtung: Auf der Downloadseite sind mehrere Grafana-Versionen verfügbar (Cloud und OSS). Nach klicken auf OSS erscheint eine Auswahl Enterprise und OSS. Bitte die kostenlose OSS-Version verwenden,es sein denn, jemand möchte eine andere kostenpflichtige Version erwerben. <br>
+Achtung: Auf der Downloadseite sind mehrere Grafana-Versionen verfügbar (Cloud und OSS). Nach klicken auf OSS erscheint eine Auswahl Enterprise und OSS. Bitte die kostenlose OSS-Version verwenden, es sein denn, jemand möchte eine andere kostenpflichtige Version erwerben. <br>
 
 Hinweis: Grafana läuft in der OSS-Version ausschließlich lokal. Nach meinen Informationen werden keine Daten oder Nutzungsinformationen in irgend einer Form an GrafanaLabs übertragen.
 <br>
@@ -175,7 +189,7 @@ Hinweis: Grafana läuft in der OSS-Version ausschließlich lokal. Nach meinen In
 <br>
 <br>
 3. Starte grafana-server.exe <br>
-   --> dazu mit der rechten Maustaste unter C:\Programme\GrafanaLabs\grafana\bin die Datei grafana-server.exe klicken und diese unbedingt als Administrator ausführen <br>
+   --> dazu zunächst mit der rechten Maustaste unter C:\Programme\GrafanaLabs\grafana\bin (bei Standard-Installation) auf die Datei grafana-server.exe klicken und diese unbedingt als Administrator ausführen <br>
    <br>
    <br>
 4. Starte Grafana über das Startmenü. Standardmäßig läuft Grafana unter `http://localhost:3000`.<br>
@@ -230,7 +244,7 @@ sudo systemctl enable grafana-server
 
    ![image](https://github.com/user-attachments/assets/fcc33ea7-6f8f-4b8e-8ff5-3951fe06a183)
 
-3.  Grafana über Browser starten : http://deine_synology_ip:öffentlicher Port gem. Conatiner (z.B. 3030)
+3.  Grafana über Browser starten : http://deine_synology_ip:öffentlicher Port gem. Entellung im Container (z.B. 3030)
 
     Standard-Login:
     User: admin
@@ -245,15 +259,15 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 <br>
 ##  5. Import des Dashboards
 1.	Lade die Dashboard-JSON-Datei herunter: Viessmann Wärmepumpe – All-in-One Dashboard.json
-2.	Windows: Starte grafaner-server.exe als Administrator
-3.	Starte Grafana
+2.	Unter Windows: Starte grafaner-server.exe als Administrator
+3.	Starte Grafana über den Web-Browser
 4.	Auswahl → Dashboard
 5.	Einrichten der Datasource (Verbindung zur viessmann_events.db)
     Unter Connections --> Datasource auf "Add new connection klicken"<br>
     <br>
     <img width="301" height="398" alt="image" src="https://github.com/user-attachments/assets/93a2f160-40e5-4f43-9e2d-5ea274a1182a" />  <br>
     <br>
-    auf auf "new connection" klicken und SQLite eingeben <br>
+    auf auf "new connection" klicken und SQLite unter Search eingeben <br>
     <br>
     <img width="1344" height="471" alt="image" src="https://github.com/user-attachments/assets/53081b3c-04e1-4324-ae69-d4d483ba31ce" /><br>
     <br>
@@ -273,7 +287,7 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
     a) Pfad zur Datenbank eintragen
           → wo bei Euch die viesmann_events.db physisch gespeichert ist 
       
-           → C:\ ….\viesmann_events.db (Windows-Verzeichnis-Schreibweise)
+           → unter Windows: C:\ ….\viesmann_events.db (Windows-Verzeichnis-Schreibweise)
            
            → alle übrigen Felder unverändert lassen
           
@@ -296,7 +310,7 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
    <br>
    <img width="638" height="648" alt="image" src="https://github.com/user-attachments/assets/8eaf026f-04a6-49d3-8e28-3c509f5569d4" /> <br>
 <br>
-    aus GitHub heruntergeladenen JSON auswählen <br>
+    aus GitHub heruntergeladene JSON-Datei auswählen <br>
     <br>
     Datenbank auswählen<br>
     <br>
@@ -331,9 +345,9 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
    <br>
    <img width="184" height="195" alt="image" src="https://github.com/user-attachments/assets/482d691d-e856-4b36-83d3-269abf881e60" />  <br>
 <br>
-   in Query eingeben:  <br>
+   im Feld Query eingeben:  <br>
    <br>
-   select installation_id from temperature_snapshots group by  installation_id <br>
+   select installation_id from temperature_snapshots group by installation_id <br>
 <br>
    auf "Save Dashboard" klicken <br>
    <br>
@@ -366,9 +380,9 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
     - Datenbank (Datenbank-Verwaltungstool) <br>
     - VICare (homeassistent) <br>
 <br>
-    müssen selbst händisch eingfügt werden. sonein Link nicht genutzt werden soll, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden. <br>
+    müssen selbst händisch eingfügt werden. Soll ein Link nicht genutzt werden, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden. <br>
 <br>
-9. Übrige Variable einstellen<br>
+9. Übrige Variablen einstellen<br>
 <br>
   -  Korrekturfaktor Strom <br>
   -  Start Wirtschaftsjahr <br>
@@ -420,12 +434,24 @@ https://github.com/mschneider82/vieventlog
 
 vieventlog steht unter der MIT License.
 
+Die MIT Lizenzbedingungen sind abrufbar unter:
+https://mit-license.org
+
 Dieses Projekt ist unabhängig von vieventlog und steht in keiner geschäftlichen oder organisatorischen Verbindung zu dessen Autor.
 
 6.3 Lizenz dieses Repositories
 
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien stehen unter der
 Creative Commons Attribution 4.0 International (CC BY 4.0).
+
+Die Lizenzbedingungen können hier abgerufen werden:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Innerhalb der Lizenz ist Folgendes erlaubt:
+	•	Nutzung der Dashboard-Dateien
+	•	Weitergabe an Dritte
+	•	Bearbeitung / Anpassung der Dateien
+	•	Redistribution / erneute Veröffentlichung
 
 Namensnennung des Urhebers ist erforderlich.
 
@@ -487,6 +513,9 @@ https://github.com/mschneider82/vieventlog
 
 vieventlog is licensed under the MIT License.
 
+The MIT license text is available at:
+https://mit-license.org
+
 This project is independent from vieventlog and is not affiliated with its author.
 
 3. License of This Repository
@@ -495,6 +524,9 @@ All Grafana dashboard JSON files contained in this repository are licensed under
 
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 
+Full license text:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
 You are free to:
 - Use
 - Share
@@ -502,9 +534,6 @@ You are free to:
 - Redistribute
 
 Attribution to the original author is required.
-
-Full license text:
-https://creativecommons.org/licenses/by/4.0/legalcode
 
 © 2026 Hans-Hermann Gröger
 
