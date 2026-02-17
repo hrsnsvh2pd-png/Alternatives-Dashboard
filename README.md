@@ -29,13 +29,20 @@ https://github.com/mschneider82/vieventlog/releases
 
 vieventlog ist unter der MIT-Lizenz lizenziert.
 Lizenzbedingungen:
-https://github.com/mschneider82/vieventlog/blob/main/LICENSE
+https://mit-license.org
+
+Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien stehen unter der
+Creative Commons Attribution 4.0 International (CC BY 4.0).
+
+Die Lizenzbedingungen können hier abgerufen werden:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
 
 Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner offiziellen Verbindung zu vieventlog oder dessen Autor.
 
 
 ## 1. Vorbemerkung
-Matthias Schneider hat mit sehr viel Herzblut vientlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
+Matthias Schneider hat mit sehr viel Herzblut vieventlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
 
 Dies war meine Motivation. 
 
@@ -62,8 +69,6 @@ d) Aus meiner beruflichen Erfahrung weiß ich, dass eigentlich jeder Nutzer sein
 
 Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installation verfügbaren Daten entwickelt. Es setzt auf vieventlog (genauer auf der Datenbank viessmann_events.db) auf, setzt also zwingend voraus, dass vieventlog läuft und die Datenbank fortschreibt. Dem Sinn einer Community entsprechend möchte ich dieses Dashboard allen Mitgliedern anbieten. Matthias ist über dieses Vorgehen vorab informiert worden und hat empfohlen, das Dashboard ebenfalls auf GitHub zu veröffentlichen, um es mit vieventlog verlinken zu können. <br>
 <br>
-Die mit ausgelieferte Datei "Alternatives Dashboard Vnn.pdf" enthält Hinweise zur Nutzung des Dashboards sowie einen Leitfaden zur Installation von Grafana unter Windows sowie zum Laden und zur Einrichtung des Dashboards in Grafana (OSS).<br>
-<br>
 Das Laden und die Einrichtung des Dashboards unter Grafana (OSS) ist im übrigen unabhängig von der Systemplattform, auf der Grafana (OSS) läuft. <br>
 
 
@@ -73,14 +78,14 @@ Das Laden und die Einrichtung des Dashboards unter Grafana (OSS) ist im übrigen
 <br>
 <br>
 
-Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus errreichbar (separate Linkbuttons für Events und Dashboard/Kältekreislauf). 
+Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus erreichbar (separate Linkbuttons für Events und Dashboard/Kältekreislauf). 
 
-Vieventlog fungiert für mich unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events und Snapshots) sowie punktuell für vertiefte bzw. Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statitikwerte, etc.. Es wird ohnehin zwingend für die Konto_Verwaltung (inbes. Verbindung zur Datenbank, API-Call-Intervalle (Event und Snapshots) und Daten-Aufbewahrungsfristen) sowie für die Geräteeinstellungen benötigt. <br>
-Unverzichtbar ist für mich außerdem die Kältekreislauf-Visualisierung und Einordnung des Heizkreis-Vorlauf-Wertes bei herrschender Außentemperaturn in der Heizkurve. Und da das Dashboard ausschließlich die Wärmepumpe im Fokus hat, ist es ohnehin für die Information bezüglich Smart Client-Geräte, Vitoevent-Systeme und Vitocharge-Geräte unabdingbar.
+Vieventlog fungiert für mich unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events und Snapshots) sowie punktuell für vertiefte bzw. Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statistikwerte, etc.. Es wird ohnehin zwingend für die Konto_Verwaltung (inbes. Verbindung zur Datenbank, API-Call-Intervalle (Event und Snapshots) und Daten-Aufbewahrungsfristen) sowie für die Geräteeinstellungen benötigt. <br>
+Unverzichtbar ist für mich außerdem die Kältekreislauf-Visualisierung und Einordnung des Heizkreis-Vorlauf-Wertes bei herrschender Außentemperaturen in der Heizkurve. Und da das Dashboard ausschließlich die Wärmepumpe im Fokus hat, ist es ohnehin für die Information bezüglich Smart Client-Geräte, Vitoevent-Systeme und Vitocharge-Geräte unabdingbar.
 
 Desweiteren nutze ich VICare (Homeassistant) als Alternative zur VICare-App (auf Windows-PC) - insbesondere auch, wenn die VICare-App nicht verfügbar ist und ich Einstellungen bei meiner Wärmepumpe ändern muss (häufig funktioniert die API-Verbindung noch, wenn die App ausgefallen ist). 
 
-Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehemen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Datenbankmanagement-Tool, das ebenfalls auf meiner Synology-Datenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool iat aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser für SQLite, das auch für macOS und die meisten Versionen von Linux und Unix verfügbar ist (https://sqlitebrowser.org/). 
+Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehmen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Datenbankmanagement-Tool, das ebenfalls auf meiner Synology-Datenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool ist aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser für SQLite, das auch für macOS und die meisten Versionen von Linux und Unix verfügbar ist (https://sqlitebrowser.org/). 
 
 Alle Links können nach der Installation über die Grafana-Oberfläche angepasst oder ggf. gelöscht werden. Selbstverständlich können auch neue Links ergänzt werden. 
 
@@ -110,7 +115,7 @@ CREATE VIEW IF NOT EXISTS 'temperature_snapshots_stat' as <br>
 <br>
 b) temperature_snapshots_takte heute  <br>
 <br>
-Diese View dient der Erkennung von Ein-/Ausschaltvorgängen des Kompressors zur Berechnung der Kompressorstarts des laufenden Tages ("Vorlesen" des Kompressorzustandes im zeitlich nachgelegerten Datensatz und Übertragung des kommenden Status in den gerade berarbeiteten Datensatz)
+Diese View dient der Erkennung von Ein-/Ausschaltvorgängen des Kompressors zur Berechnung der Kompressorstarts des laufenden Tages ("Vorlesen" des Kompressorzustands im zeitlich nachgelegerten Datensatz und Übertragung des kommenden Status in den gerade bearbeiteten Datensatz)
 
 CREATE VIEW IF NOT EXISTS<br>
  'temperature_snapshots_takte_heute' <br>
@@ -125,7 +130,7 @@ CREATE VIEW IF NOT EXISTS<br>
 <br>
 c) event_betriebszustand_timeline  <br>
 <br>
-Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mapping einzelner Events auf bestimmte Betriebszustände <br>
+Diese View dient der Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mapping einzelner Events auf bestimmte Betriebszustände <br>
 <br>
 CREATE VIEW 'event_betriebszustand_timeline' as <br>
 SELECT  <br>
@@ -172,10 +177,8 @@ order by error_code <br>
 
 ## 4. Installation von Grafana
 
-Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgemäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windows-PC unter Windows 11 installiert. Ich habe aufgrund der Verbreitung im beiligenden pdf-Dokuement die Grafana-Installation und -Einrichtung unter Windows ausführlich beschrieben. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. 
-
-Die ausführliche Installation und Einrichtung unter Windows ist auch auf den Seten 14 - 25 in beiliegenden pdf-Dokument beschrieben.
-
+Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgemäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windows-PC unter Windows 11 installiert. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. <br>
+<br>
 
 ### Windows<br>
 1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: (https://grafana.com/get/)<br>
@@ -199,7 +202,7 @@ Hinweis: Grafana läuft in der OSS-Version ausschließlich lokal. Nach meinen In
 <br>
 <br>
 5. Standard-Login: Benutzername: `admin`, Passwort: `admin`
-   Nach dem erstmaligen Aufruf muss das admin-Passowrt geändert werden.
+   Nach dem erstmaligen Aufruf muss das admin-Passwort geändert werden.
 
 
 **Datenbank-Verwaltung:**
@@ -244,7 +247,7 @@ sudo systemctl enable grafana-server
 
    ![image](https://github.com/user-attachments/assets/fcc33ea7-6f8f-4b8e-8ff5-3951fe06a183)
 
-3.  Grafana über Browser starten : http://deine_synology_ip:öffentlicher Port gem. Entellung im Container (z.B. 3030)
+3.  Grafana über Browser starten : http://deine_synology_ip:öffentlicher Port gem. Einstellung im Container (z.B. 3030)
 
     Standard-Login:
     User: admin
@@ -285,9 +288,9 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 <br>
 
     a) Pfad zur Datenbank eintragen
-          → wo bei Euch die viesmann_events.db physisch gespeichert ist 
+          → wo bei Euch die viessmann_events.db physisch gespeichert ist 
       
-           → unter Windows: C:\ ….\viesmann_events.db (Windows-Verzeichnis-Schreibweise)
+           → unter Windows: C:\ ….\viessmann_events.db (Windows-Verzeichnis-Schreibweise)
            
            → alle übrigen Felder unverändert lassen
           
@@ -347,8 +350,8 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 <br>
    im Feld Query eingeben:  <br>
    <br>
-   select installation_id from temperature_snapshots group by installation_id <br>
-<br>
+   SELECT installation_id FROM temperature_snapshots GROUP BY installation_id <br>
+   <br>
    auf "Save Dashboard" klicken <br>
    <br>
    <img width="1338" height="695" alt="image" src="https://github.com/user-attachments/assets/aed2897e-8139-46d6-b934-a335f498d290" /> <br>
@@ -380,14 +383,14 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
     - Datenbank (Datenbank-Verwaltungstool) <br>
     - VICare (homeassistent) <br>
 <br>
-    müssen selbst händisch eingfügt werden. Soll ein Link nicht genutzt werden, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden. <br>
+    müssen selbst händisch eingefügt werden. Soll ein Link nicht genutzt werden, kann er einfach gelöscht werden; neue Links können beliebig hinzugefügt werden. <br>
 <br>
 9. Übrige Variablen einstellen<br>
 <br>
   -  Korrekturfaktor Strom <br>
   -  Start Wirtschaftsjahr <br>
-   - Zeitzone einstellen <br>
-    -gewünschtes Intervall auswählen <br>
+  - Zeitzone einstellen <br>
+  - gewünschtes Intervall auswählen <br>
 <br>
 10. Nutzer und Berechtigungen anlegen<br>
 <br>
