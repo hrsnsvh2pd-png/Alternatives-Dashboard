@@ -1714,9 +1714,9 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "queryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_start ASC;\r\n\r\n",
+          "queryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_end ASC;\r\n\r\n",
           "queryType": "table",
-          "rawQueryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_start ASC;\r\n\r\n",
+          "rawQueryText": "SELECT\r\n        strftime('%s', event_timestamp_start) AS time,\r\n        strftime('%s', event_timestamp_end) AS timeEnd,\r\n    CAST(betriebszustand AS TEXT) AS state\r\nFROM event_betriebszustand_timeline\r\nORDER BY event_timestamp_end ASC;\r\n\r\n",
           "rawSql": "SELECT strftime('%s',timestamp)*1000 AS time, compressor_power AS Strom, thermal_power AS Waerme FROM temperature_snapshots_grafana WHERE installation_id = '7654321', $__timeFilter(strftime('%s',timestamp)*1000)",
           "refId": "A",
           "timeColumns": [
@@ -3105,8 +3105,8 @@
     "list": [
       {
         "current": {
-          "text": "1.0",
-          "value": "1.0"
+          "text": "1.05",
+          "value": "1.05"
         },
         "description": "Korrekturfaktor Strom",
         "label": "Korrekturfaktor Strom",
@@ -3114,11 +3114,11 @@
         "options": [
           {
             "selected": true,
-            "text": "1.0",
-            "value": "1.0"
+            "text": "1.05",
+            "value": "1.05"
           }
         ],
-        "query": "1.0",
+        "query": "1.05",
         "type": "textbox"
       },
       {
@@ -3178,13 +3178,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "Europe/Berlin",
   "title": "Viessmann Wärmepumpe – All-in-One Dashboard",
   "uid": "viessmann-all-in-one",
-  "version": 464,
+  "version": 465,
   "weekStart": ""
 }
