@@ -181,7 +181,7 @@ Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-D
 <br>
 
 ### Windows<br>
-1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: (https://grafana.com/get/)<br>
+1. Lade den Windows-Installer von der offiziellen Grafana-Website herunter: [(https://grafana.com/get/)](https://grafana.com/grafana/download?edition=oss)<br>
 <br>
 Achtung: Auf der Downloadseite sind mehrere Grafana-Versionen verfügbar (Cloud und OSS). Nach klicken auf OSS erscheint eine Auswahl Enterprise und OSS. Bitte die kostenlose OSS-Version verwenden, es sein denn, jemand möchte eine andere kostenpflichtige Version erwerben. <br>
 
