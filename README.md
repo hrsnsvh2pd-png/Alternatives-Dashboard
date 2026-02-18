@@ -41,7 +41,24 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner offiziellen Verbindung zu vieventlog oder dessen Autor.
 
 
-## 1. Vorbemerkung
+## 1. Aktuelle Entwicklung
+Matthias Schneider hat vorgeschlagen, die Querys in den Panels auf HTTP API direkt aus vieventlog umzustellen. Er hat hierfür auch schon einen Migrationsplan erstellt. Dies hätte den Vorteil, dass Grafana keinen Datenbankzugang mehr brauchen würde sondern lediglich Netzwerkzugang zu vieventlog (über Port 5000). Außerdem wäre dadurch eine Stabilität der Panel-Abfragen gegenüber Datenbank-Schemaänderungen (wie zuletzt z.B. bei der Umstellung der Temperatur-/Sensorwerte auf die Viessmann-Datenstruktur) gewährleistet. <br>
+<br>
+Ich halte eine Integration des Dashboards in vieventlog in der Tat für den richtigen, weil aus Nutzersicht einzig sinnvollen Weg, zumal sich zumindest mein Use Case vom VICare-Ersatz (primär Anzeige und Speicherung der Statusmeldungen) hin zur kontinuierlichen und umfänglichen Überwachung meiner Wärmepumpe gewandelt hat.<br>
+<br>
+Ich habe daher Matthias den Vorschlag einer vollständigen (inhaltlichen und technischen) Integration meines Dashboards in vieventlog gemacht und ihm mein Dashboard dafür zur Verfügung gestellt:<br>
+<br>
+Dem Use Case entsprechend würde der Einstieg in vieventlog dabei über das Dashboard für die Wärmepumpe erfolgen; die existierenden vieventlog Seiten (Events und Dashboard) wären direkt aus dem Dashboard aufrufbar (ist so schon realisiert).<br>
+<br>
+Inhaltlich ersetzt mein alternatives Dashboard die Bereiche  "Temperatur- und Sensorverlauf“ und "Verbrauchsstatistiken“ im vorhandenen vieventlog-Dashboard. Diese könnten deshalb entfallen. Der Bereich "Detaillierte Aufschlüsselung“ sollte auf jeden Fall erhalten bleiben. Dies wären die einzigen inhaltlichen Modifikationen auf vieventlog-Seite. <br>
+<br>
+Soweit möglich sollten die Panel-Abfragen auf HTTP API umgestellt werden; dort wo es nicht geht oder schwierig wird könnte es zunächst bei SQL-Abfragen auf die Datenbank bleiben. Grafana erlaubt ja mehrere alternative Datasources in einem Dashboard (allerdings nur eine je Panel).<br>
+<br>
+Dieser Ansatz hätte für mich neben den technisch-funktionalen Vorteilen (weitestgehende Stabilität gegenüber Datenbank-Schema-Änderungen, höhere Datenkonsistenz mit vieventlog überall da, wo vieventlog bereits direkt API-Inhalte nutzt) den Charme einer umfassenden Anwendung "aus einem Guss", die nach meiner Einschätzung dem Use Case vieler Nutzer entspricht und zudem allen Nutzern die volle Flexibilität hinsichtlich Präsentation und Inhalten des (neuen) Dashboards (über Grafana OSS) ermöglicht – zumal Grafana (OSS) ja auch viele Funktionalitäten (z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen, .Variablen-Handling) bereits out of the box bereitstellt. <br>
+<br>
+Ich bleibe mit Matthias diesebezüglich im Austausch und werde auch an dieser Stelle berichten.
+
+## 2. Vorbemerkung
 Matthias Schneider hat mit sehr viel Herzblut vieventlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
 
 Dies war meine Motivation. 
@@ -72,7 +89,7 @@ Ich habe dieses Dashboard nach meinen Vorstellungen mit den aus meiner Installat
 Das Laden und die Einrichtung des Dashboards unter Grafana (OSS) ist im übrigen unabhängig von der Systemplattform, auf der Grafana (OSS) läuft. <br>
 
 
-## 2. Mein Use Case
+## 3. Mein Use Case
 
 <img width="1330" height="940" alt="image" src="https://github.com/user-attachments/assets/97ad467d-27cf-46ca-91f8-932a08db7a9f" />
 <br>
@@ -89,7 +106,7 @@ Desweiteren nutze ich VICare (Homeassistant) als Alternative zur VICare-App (auf
 
 Alle Links können nach der Installation über die Grafana-Oberfläche angepasst oder ggf. gelöscht werden. Selbstverständlich können auch neue Links ergänzt werden. 
 
-## 3. Vorbereitende Massnahmen: Erzeugen von 3 logischen Views in der Datenbank viessmann_events.db
+## 4. Vorbereitende Massnahmen: Erzeugen von 3 logischen Views in der Datenbank viessmann_events.db
 
 Um das über den bereitgestellten JSON gelieferte Dashboard nutzen zu können, müssen 3 logische Views in der Datenbank viessmann_events.db erzeugt werden. Dies kann über eines der vorstehend genannten Datenbankmanagement-Tools ganz einfach durch Eingabe und Ausführung der nachsehenden SQL-Statements im Datenbankmanagement-Tool erfolgen. 
 
@@ -175,7 +192,7 @@ group by error_code <br>
 order by error_code <br>
 <br>
 
-## 4. Installation von Grafana
+## 5. Installation von Grafana
 
 Das Grafana-Dashboard läuft bei mir ebenso wie vieventlog auf meiner Synology-Datenstation in einem Docker-Container. Diese Installation habe ich naturgemäß intensiv getestet. Ebenfalls habe ich Grafana und das Dashboard auf meinem Windows-PC unter Windows 11 installiert. Die Grafana-Einrichtung und das Laden des Dashboards läuft unter Windows und im Synology-Docker-Contaimer identisch ab. Die Installationshinweise für die anderen Umgebungen sind automatisiert erstellt worden und nicht getestet worden. <br>
 <br>
@@ -260,7 +277,7 @@ Datenbank-Verwaltung: Viessmann-Datenbank z.B. /volume1/docker/viessmann_events.
 Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
 <br>
 <br>
-##  5. Import des Dashboards
+##  6. Import des Dashboards
 1.	Lade die Dashboard-JSON-Datei herunter: Viessmann Wärmepumpe – All-in-One Dashboard.json
 2.	Unter Windows: Starte grafaner-server.exe als Administrator
 3.	Starte Grafana über den Web-Browser
@@ -403,11 +420,11 @@ Tool: SQLite Browser auf Client oder coleifer/sql-web (mein Tool)
     <img width="296" height="527" alt="image" src="https://github.com/user-attachments/assets/26fd6102-ccd7-41d2-81b1-f12151ccb386" /> <br>
     <br>
 
-##  6.Lizenz und Haftungsbestimmungen / License & Disclaimer
+##  7.Lizenz und Haftungsbestimmungen / License & Disclaimer
 Deutschsprachige Version: <br>
 <br>
 
-6.1 Nutzung von Grafana
+7.1 Nutzung von Grafana
 
 Dieses Dashboard wurde für die Nutzung mit Grafana OSS entwickelt, einem Produkt der Grafana Labs.
 
@@ -425,7 +442,7 @@ Jeder Nutzer ist verpflichtet, eine eigene Grafana-Installation bereitzustellen.
 
 Eine Verpflichtung zur Offenlegung eigener Anpassungen entsteht nur im Rahmen der AGPL-Bestimmungen und betrifft ausschließlich Modifikationen an der AGPL-lizenzierten Software selbst.
 
-6.2 Abhängigkeit von vieventlog
+7.2 Abhängigkeit von vieventlog
 
 Das Dashboard greift auf die Datei viessmann_events.db zu, die durch die Software
 vieventlog erzeugt und fortgeschrieben wird.
@@ -442,7 +459,7 @@ https://mit-license.org
 
 Dieses Projekt ist unabhängig von vieventlog und steht in keiner geschäftlichen oder organisatorischen Verbindung zu dessen Autor.
 
-6.3 Lizenz dieses Repositories
+7.3 Lizenz dieses Repositories
 
 Die in diesem Repository enthaltenen Grafana-Dashboard-JSON-Dateien stehen unter der
 Creative Commons Attribution 4.0 International (CC BY 4.0).
@@ -460,7 +477,7 @@ Namensnennung des Urhebers ist erforderlich.
 
 © 2026 Hans-Hermann Gröger
 
-6.4 Haftungsausschluss
+7.4 Haftungsausschluss
 
 Die Bereitstellung der Dashboard-Dateien erfolgt unentgeltlich.
 
@@ -474,11 +491,11 @@ Der Nutzer ist selbst verantwortlich für:
 - Datensicherung
 - Systemsicherheit
 
-6.5 Kein Support
+7.5 Kein Support
 
 Ein Anspruch auf Support, Wartung oder Weiterentwicklung besteht nicht.
 
-6.6 Keine Verbindung zu Grafana Labs
+7.6 Keine Verbindung zu Grafana Labs
 
 Dieses Projekt steht in keiner Verbindung zu Grafana Labs und wird von diesem Unternehmen weder unterstützt noch zertifiziert.
 
