@@ -151,10 +151,13 @@ Diese View dient der Aufbereitung der Events für die Timeline-Darstellung (Eint
 <br>
 CREATE VIEW IF NOT EXISTS 'event_betriebszustand_timeline' as <br>
 SELECT  <br>
+    installation_id, <br>
+    gateway_serial,  <br>
+    device_id,  <br>
+    account_id,  <br>
     strftime   (<br>
   '%F %T', <br>
   event_timestamp) AS event_timestamp_start,<br>
-<br>
     CASE <br>
         WHEN LAG(event_timestamp) OVER (  <br>
                  PARTITION BY installation_id  <br>
@@ -172,12 +175,11 @@ SELECT  <br>
   strftime('%F %T', created_at) AS created_at,  <br>
   error_code,  <br>
   human_readable,  <br>
-  CASE   <br>                                                                                          
+  CASE    <br>         
           WHEN error_code in ('S.118')                       THEN 'S.125'   <br> 
           WHEN error_code in ('S.127', 'S.135', 'S.176')     THEN 'S.128'   <br>
   ELSE error_code <br>
   END AS 'betriebszustand' <br>
-  
 FROM events <br>
 WHERE active = 1 AND  <br>
 error_code <> 'S.187'   <br>
