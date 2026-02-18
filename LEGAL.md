@@ -14,7 +14,7 @@ Das Dashboard verwendet die Datei viessmann_events.db, die durch vieventlog, ein
 
 Quellcode: https://github.com/mschneider82/vieventlog/releases
 
-Lizenz: MIT (https://github.com/mschneider82/vieventlog/blob/main/LICENSE)
+Lizenz: MIT (https://mit-license.org/)
 
 Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner offiziellen Verbindung zu vieventlog oder dessen Autor.
 
