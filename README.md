@@ -95,14 +95,14 @@ Das Laden und die Einrichtung des Dashboards unter Grafana (OSS) ist im übrigen
 <br>
 <br>
 
-Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Informationssystem über meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus erreichbar (separate Linkbuttons für Events und Dashboard/Kältekreislauf). 
+Das Dashboard ist von mir als Aufsatz auf vieventlog entwickelt worden und dabei so konzipiert, dass es als Einstieg in vieventlog fungieren kann. Der Aufruf erfolgt dabei über localhost:3000 (Windows) bzw. über Synology_IP:3000 (sollte der Port 3000 bereits auf der Datenstation verwendet werden, muss im Grafana-Docker-Container ein Portmapping vorgenommen werden). Ich nutze es permanent als primäres Monitoringsystem für meine Wärmepumpe. Vieventlog selbst ist per Link aus dem Dashboard heraus erreichbar (separate Linkbuttons für Events und Dashboard/Kältekreislauf). 
 
-Vieventlog fungiert für mich unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events und Snapshots) sowie punktuell für vertiefte bzw. Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statistikwerte, etc.. Es wird ohnehin zwingend für die Konto_Verwaltung (inbes. Verbindung zur Datenbank, API-Call-Intervalle (Event und Snapshots) und Daten-Aufbewahrungsfristen) sowie für die Geräteeinstellungen benötigt. <br>
+Vieventlog bleibt unverzichtbar als Datenbank Engine (API-Calls → Fortschreiben der viessmann_events.db, Events und Snapshots) sowie punktuell für vertiefte bzw. Detail-Informationen über Events, Sensorwerte, Temperaturwerte, Betriebsdaten und Statistikwerte, etc.. Es wird ohnehin zwingend für die Konto_Verwaltung (inbes. Verbindung zur Datenbank, API-Call-Intervalle (Event und Snapshots) und Daten-Aufbewahrungsfristen) sowie für die Geräteeinstellungen benötigt. <br>
 Unverzichtbar ist für mich außerdem die Kältekreislauf-Visualisierung und Einordnung des Heizkreis-Vorlauf-Wertes bei herrschender Außentemperaturen in der Heizkurve. Und da das Dashboard ausschließlich die Wärmepumpe im Fokus hat, ist es ohnehin für die Information bezüglich Smart Client-Geräte, Vitoevent-Systeme und Vitocharge-Geräte unabdingbar.
 
 Desweiteren nutze ich VICare (Homeassistant) als Alternative zur VICare-App (auf Windows-PC) - insbesondere auch, wenn die VICare-App nicht verfügbar ist und ich Einstellungen bei meiner Wärmepumpe ändern muss (häufig funktioniert die API-Verbindung noch, wenn die App ausgefallen ist). 
 
-Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehmen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Datenbankmanagement-Tool, das ebenfalls auf meiner Synology-Datenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool ist aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser für SQLite, das auch für macOS und die meisten Versionen von Linux und Unix verfügbar ist (https://sqlitebrowser.org/). 
+Überaus hilfreich - insbesondere, wenn man Änderungen am Dashboard vornehmen will - hat sich auch ein Zugriff auf die Datenbank (viessmann_events.db) erwiesen. Ich nutze für den Zugriff ein Datenbankmanagement-Tool, das ebenfalls auf meiner Synology-Datenstation in einem Docker-Container läuft (coleifer/sql-web). Dieses Tool ist aus dem Dashboard über einen separaten Button verlinkt. Unter Windows nutze ich das ebenfalls kostenlose Tool DB-Browser for SQLite, das auch für macOS und die meisten Versionen von Linux und Unix sowie angabegemäß Raspberry PI verfügbar ist (https://sqlitebrowser.org/). 
 
 Alle Links können nach der Installation über die Grafana-Oberfläche angepasst oder ggf. gelöscht werden. Selbstverständlich können auch neue Links ergänzt werden. 
 
@@ -149,7 +149,7 @@ c) event_betriebszustand_timeline  <br>
 <br>
 Diese View dient der Aufbereitung der Events für die Timeline-Darstellung (Eintragung des Ende-Zeitpunkts eines Events und Mapping einzelner Events auf bestimmte Betriebszustände <br>
 <br>
-CREATE VIEW 'event_betriebszustand_timeline' as <br>
+CREATE VIEW IF NOT EXISTS 'event_betriebszustand_timeline' as <br>
 SELECT  <br>
     strftime   (<br>
   '%F %T', <br>
@@ -184,12 +184,12 @@ error_code <> 'S.187'   <br>
 <br>
 <br>
 
-Hinweis: Das hier vorgenommene Mapping muss ggf. an Eure Installation und Daten angepasst werden. Welche Events (in der Datenbank: error_codes) in Eurer Installation verwendet werden, könnt Ihr durch eine einfache SQL-Abfrage auf die Tabelle Events in Eurem Datenbankmanagent-Tool erfahren:  <br>
+Hinweis: Das hier vorgenommene Mapping muss ggf. an Eure Installation und Daten angepasst werden. Welche Events (in der Datenbank: error_codes) in Eurer Installation verwendet werden, könnt Ihr durch eine einfache SQL-Abfrage auf die Tabelle Events in Eurem Datenbankmanagent-Tool herausfinden:  <br>
  <br>
 SELECT error_code, error_description, human_readable <br>
-from events <br>
-group by error_code <br>
-order by error_code <br>
+FROM events <br>
+GROUP BY error_code <br>
+ORDER BY error_code <br>
 <br>
 
 ## 5. Installation von Grafana
