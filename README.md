@@ -42,21 +42,19 @@ Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner o
 
 
 ## 1. Aktuelle Entwicklung
-Matthias Schneider hat vorgeschlagen, die Querys in den Panels auf HTTP API direkt aus vieventlog umzustellen. Er hat hierfür auch schon einen Migrationsplan erstellt. Dies hätte den Vorteil, dass Grafana keinen Datenbankzugang mehr brauchen würde sondern lediglich Netzwerkzugang zu vieventlog (über Port 5000). Außerdem wäre dadurch eine Stabilität der Panel-Abfragen gegenüber Datenbank-Schemaänderungen (wie zuletzt z.B. bei der Umstellung der Temperatur-/Sensorwerte auf die Viessmann-Datenstruktur) gewährleistet. <br>
+mschneider82, der Entwickler von vieventlog und ich haben diskutiert, in welchem Kontext dieses Dashboard veröffentlicht werden kann. <br> 
+<br> 
+mschneider82 hat den Vorschlag gemacht, statt die SQLite-Datei direkt einzubinden, die Panels auf die bestehende HTTP-API von vieventlog umzustellen. Dies ginge mittels des Grafana-Plugins yesoreyeram-infinity-datasource, das beliebige JSON-REST-Endpunkte als Datasource einbinden kann. Die Vorteile wären insbesondere, dass Grafana keinen Dateisystemzugriff auf die Datenbank mehr bräuchte, sondern nur Netzwerkzugang zu vieventlog. Und Änderungen am Datenbankschema würden die Querys nicht mehr "brechen", d.h. das Dashboard bliebe davon unberührt. <br> 
+<br> 
+Hinweis: Dies gilt allerdings nur, soweit Inhalte zwischen existierenden Spalten verschoben werde (wie z.B. bei der kürzlichen Umstellung von Temperatur-/Sensorwerten auf die Viessmann-Datenstruktur) oder bei Umbenennung existierender Spalten in der Datenbank: Zusätzliche Felder führen dagegen zu keiner Beeinträchtigung. <br> 
+<br> 
+mschneider82 hat dazu bereits einen Migrationsplan erarbeitet.<br> 
+<br> 
+Die Idee einer Integration des Alternativen Dashboards in vieventlog wäre aus meiner Sicht bestechend, da sie insbesondere meinen, aber wohl auch den Use Case vieler anderer Nutzer unterstützt: Dabei steht nicht mehr der "Ersatz" von VICare sondern vielmehr die vollständige kontinuierliche Überwachung meiner Wärmepumpe im Fokus. Wir Nutzer hätten den Vorteil einer durchgängigen, inhaltlich und technisch konsistenten Anwendung und gleichzeitig über Grafana (OSS) die volle Flexibilität hinsichtlich Präsentation und Inhalten des Dashboards. Zumal Grafana (OSS) viele Features wie z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen und Variablen-Handling ja bereits out of the box bereitstellt.<br> 
 <br>
-Ich halte eine Integration des Dashboards in vieventlog in der Tat für den richtigen, weil aus Nutzersicht einzig sinnvollen Weg, zumal sich zumindest mein Use Case vom VICare-Ersatz (primär Anzeige und Speicherung der Statusmeldungen) hin zur kontinuierlichen und umfänglichen Überwachung meiner Wärmepumpe gewandelt hat.<br>
+Ich habe daher mschneider82 den Vorschlag einer vollständigen (inhaltlichen und technischen) Integration meines Dashboards in vieventlog gemacht und ihm dafür mein Dashboard angeboten, zumal ich mangels hinreichender Fachkenntnisse und Zeit die Umstellung auf HTTP-API nicht leisten kann. Die fehlende Umstellung auf HTTP_API wäre aus meiner Sicht aber kein Hinderungsgrund für eine Integration.<br>
 <br>
-Ich habe daher Matthias den Vorschlag einer vollständigen (inhaltlichen und technischen) Integration meines Dashboards in vieventlog gemacht und ihm mein Dashboard dafür zur Verfügung gestellt:<br>
-<br>
-Dem Use Case entsprechend würde der Einstieg in vieventlog dabei über das Dashboard für die Wärmepumpe erfolgen; die existierenden vieventlog Seiten (Events und Dashboard) wären direkt aus dem Dashboard aufrufbar (ist so schon realisiert).<br>
-<br>
-Inhaltlich ersetzt mein alternatives Dashboard die Bereiche  "Temperatur- und Sensorverlauf“ und "Verbrauchsstatistiken“ im vorhandenen vieventlog-Dashboard. Diese könnten deshalb entfallen. Der Bereich "Detaillierte Aufschlüsselung“ sollte auf jeden Fall erhalten bleiben. Dies wären die einzigen inhaltlichen Modifikationen auf vieventlog-Seite. <br>
-<br>
-Soweit möglich sollten die Panel-Abfragen auf HTTP API umgestellt werden; dort wo es nicht geht oder schwierig wird könnte es zunächst bei SQL-Abfragen auf die Datenbank bleiben. Grafana erlaubt ja mehrere alternative Datasources in einem Dashboard (allerdings nur eine je Panel).<br>
-<br>
-Dieser Ansatz hätte für mich neben den technisch-funktionalen Vorteilen (weitestgehende Stabilität gegenüber Datenbank-Schema-Änderungen, höhere Datenkonsistenz mit vieventlog überall da, wo vieventlog bereits direkt API-Inhalte nutzt) den Charme einer umfassenden Anwendung "aus einem Guss", die nach meiner Einschätzung dem Use Case vieler Nutzer entspricht und zudem allen Nutzern die volle Flexibilität hinsichtlich Präsentation und Inhalten des (neuen) Dashboards (über Grafana OSS) ermöglicht – zumal Grafana (OSS) ja auch viele Funktionalitäten (z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen, .Variablen-Handling) bereits out of the box bereitstellt. <br>
-<br>
-Ich bleibe mit Matthias diesebezüglich im Austausch und werde auch an dieser Stelle berichten.
+mschneider82 wird dieser Idee zunächst nicht folgen; eine Integration in vieventlog ist deshalb derzeit nicht vorgesehen. Aus diesem Grund veröffentliche ich mein Alternatives Dashboard zum gegenwärtigen Zeitpunkt Stand Alone. 
 
 ## 2. Vorbemerkung
 Matthias Schneider hat mit sehr viel Herzblut vieventlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
