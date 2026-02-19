@@ -42,19 +42,18 @@ Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner o
 
 
 ## 1. Aktuelle Entwicklung
-mschneider82, der Entwickler von vieventlog und ich haben diskutiert, in welchem Kontext dieses Dashboard veröffentlicht werden kann. <br> 
-<br> 
-mschneider82 hat den Vorschlag gemacht, statt die SQLite-Datei direkt einzubinden, die Panels auf die bestehende HTTP-API von vieventlog umzustellen. Dies ginge mittels des Grafana-Plugins yesoreyeram-infinity-datasource, das beliebige JSON-REST-Endpunkte als Datasource einbinden kann. Die Vorteile wären insbesondere, dass Grafana keinen Dateisystemzugriff auf die Datenbank mehr bräuchte, sondern nur Netzwerkzugang zu vieventlog. Und Änderungen am Datenbankschema würden die Querys nicht mehr "brechen", d.h. das Dashboard bliebe davon unberührt. <br> 
-<br> 
-Hinweis: Dies gilt allerdings nur, soweit Inhalte zwischen existierenden Spalten verschoben werde (wie z.B. bei der kürzlichen Umstellung von Temperatur-/Sensorwerten auf die Viessmann-Datenstruktur) oder bei Umbenennung existierender Spalten in der Datenbank: Zusätzliche Felder führen dagegen zu keiner Beeinträchtigung. <br> 
-<br> 
-mschneider82 hat dazu bereits einen Migrationsplan erarbeitet.<br> 
-<br> 
-Die Idee einer Integration des Alternativen Dashboards in vieventlog wäre aus meiner Sicht bestechend, da sie insbesondere meinen, aber wohl auch den Use Case vieler anderer Nutzer unterstützt: Dabei steht nicht mehr der "Ersatz" von VICare sondern vielmehr die vollständige kontinuierliche Überwachung meiner Wärmepumpe im Fokus. Wir Nutzer hätten den Vorteil einer durchgängigen, inhaltlich und technisch konsistenten Anwendung und gleichzeitig über Grafana (OSS) die volle Flexibilität hinsichtlich Präsentation und Inhalten des Dashboards. Zumal Grafana (OSS) viele Features wie z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen und Variablen-Handling ja bereits out of the box bereitstellt.<br> 
+Im Zuge der Entwicklung dieses Alternativen Dashboards ist in mir die Idee einer Integration dieses Dashboards in vieventlog gereift. Hintergrund ist, dass sich im Zuge der Nutzung von vieventlog mein Use Case verändert hat: Danach steht jetzt nicht mehr der "Ersatz" von VICare sondern vielmehr die vollumfängliche kontinuierliche Überwachung meiner Wärmepumpe im Fokus.<br>
 <br>
-Ich habe daher mschneider82 den Vorschlag einer vollständigen (inhaltlichen und technischen) Integration meines Dashboards in vieventlog gemacht und ihm dafür mein Dashboard angeboten, zumal ich mangels hinreichender Fachkenntnisse und Zeit die Umstellung auf HTTP-API nicht leisten kann. Die fehlende Umstellung auf HTTP_API wäre aus meiner Sicht aber kein Hinderungsgrund für eine Integration.<br>
+Die Integration dieses Dashboards in vieventlog hätte vor diesem Hintergrund den Vorteil einer durchgängigen, inhaltlich konsistenten Anwendung bei gleichzeitig voller Flexibilität hinsichtlich Präsentation und Inhalten des Dashboards über GRAFANA (OSS). Zumal Grafana (OSS) viele Features wie z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen und Variablen-Handling bereits out of the box bereitstellt.<br>
 <br>
-mschneider82 wird dieser Idee zunächst nicht folgen; eine Integration in vieventlog ist deshalb derzeit nicht vorgesehen. Aus diesem Grund veröffentliche ich mein Alternatives Dashboard zum gegenwärtigen Zeitpunkt Stand Alone. 
+mschneider82 (Entwickler von vieventlog) und ich überlegen derzeit, ob und wie eine Integration erfolgen könnte. Ein Weg wäre, die Dashboard-Panels auf HTTP-API umzustellen, so dass das Dashboard lediglich eine Netzwerkverbindung zu vieventlog benötigen würde. mschneider82 hat dazu bereits erste Migrationsüberlegungen angestellt. <br>
+<br>
+Eine alternative Lösung wäre eine Verbindung per konfigurierbarem Link. Dieser ist bereits im Dashboard enthalten, müsste aber in vieventlog ergänzt werden, so dass ein wechselseitiger Aufruf von Dashboard und vieventlog aus der jeweils anderen Anwendung möglich würde. Dieser Link wäre dann in beiden Anwendungen entsprechend der tatsächlichen Installations-Gegebenheiten im Zuge der Installation des Dashboards anzupassen. <br>
+<br>
+Die Lösung per Link-Integation stünde im Übrigen einer (auch schrittweisen) Umstellung des Dashboards auf HTTP-API zu einem späteren Zeitpunkt nicht im Wege. <br>
+<br>
+Derzeit ist offen, ob und wie eine Integration erfolgen wird. Ich werde an dieser Stelle über die weitere Entwicklung berichten.
+
 
 ## 2. Vorbemerkung
 Matthias Schneider hat mit sehr viel Herzblut vieventlog geschaffen – und mit dieser Anwendung die zentrale Lücke nach Abschaltung von VIGuide für Nutzer geschlossen. Es ist sicherlich auch ein Stück „Berufskrankheit“, die mich dazu veranlasst hat, ein alternatives Dashboard auf Grundlage von vieventlog (genau: der durch vieventlog fortgeschriebenen  Datenbank viessmann_events.db) zu schaffen. Mich treibt dabei, bei einer derartig herausragenden Leistung zu versuchen, das Maximum aus dieser Anwendung herauszuholen. 
@@ -184,7 +183,7 @@ error_code <> 'S.187'   <br>
 <br>
 <br>
 
-Hinweis: Das hier vorgenommene Mapping muss ggf. an Eure Installation und Daten angepasst werden. Welche Events (in der Datenbank: error_codes) in Eurer Installation verwendet werden, könnt Ihr durch eine einfache SQL-Abfrage auf die Tabelle Events in Eurem Datenbankmanagent-Tool herausfinden:  <br>
+Hinweis: Das hier vorgenommene Mapping der Statusmeldungen (error_codes) muss ggf. an Eure Installation und Daten angepasst werden. Welche Events (in der Datenbank: error_codes) in Eurer Installation verwendet werden, könnt Ihr durch eine einfache SQL-Abfrage auf die Tabelle Events in Eurem Datenbankmanagent-Tool herausfinden:  <br>
  <br>
 SELECT error_code, error_description, human_readable <br>
 FROM events <br>
@@ -256,7 +255,7 @@ sudo systemctl enable grafana-server
 4.  Datenbank-Verwaltung: Viessmann-Datenbank viessmann_events.db, Tool: DB Browser for SQLite
 
 ### Synology NAS
-1. 	Installiere das Docker-Paket über das Synology-Paketzentrum (Image: z.B. grafana/grafana: latest
+1. 	Installiere das Docker-Paket über das Synology-Paketzentrum (Image: z.B. grafana/grafana: latest)
 
     ![image](https://github.com/user-attachments/assets/9e0e7734-56cf-428a-95be-cf6b4809d76b)
 
