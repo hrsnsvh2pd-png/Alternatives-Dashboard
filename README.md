@@ -42,6 +42,18 @@ Dieses Dashboard ist ein eigenständiges Community-Projekt und steht in keiner o
 
 
 ## 1. Aktuelle Entwicklung
+03.03.2026 <br>
+<br>
+Bitte vorsichtshalber nicht auf das neueste Grafana-Release updaten. In diesem Release funktioniert das Time-Modul für das Dashboard möglicherweise nicht richtig und die Anzeigen in einzelnen Pannels können eventuell nicht mehr passen (gerade auch auf Mobilgeräten). <br>
+<br>
+Das letzte sicher für das Dashboard funktionierende Grafana-Image-Release ist die Version 12.3.2. (grafana/grafana:13.3.2) <br>
+<br>
+Diese Erkenntnis habe ich nur bei der Installation auf meiner Synology-Datenstation (Container unter dem  grafana/grafana:latest-Image) gemacht. Sie gilt aber möglicherweise auch für andere Plattformen. 
+Deshalb empfehle ich dringend, eine vollständige Sicherungskopie der Grafana-Installation (Synology: ZIP-File des kompletten Grafana-Ordners im Docker-Verzeichnis) vor Beginn der Update-Durchführung zu erstellen, um ggf. wieder zurücksetzen zu können. <br>
+<br>
+----------------------------- <br>
+<br>
+
 Im Zuge der Entwicklung dieses Alternativen Dashboards ist in mir die Idee einer Integration dieses Dashboards in vieventlog gereift. Hintergrund ist, dass sich im Zuge der Nutzung von vieventlog mein Use Case verändert hat: Danach steht jetzt nicht mehr der "Ersatz" von VICare sondern vielmehr die vollumfängliche kontinuierliche Überwachung meiner Wärmepumpe im Fokus.<br>
 <br>
 Die Integration dieses Dashboards in vieventlog hätte vor diesem Hintergrund den Vorteil einer durchgängigen, inhaltlich konsistenten Anwendung bei gleichzeitig voller Flexibilität hinsichtlich Präsentation und Inhalten des Dashboards über GRAFANA (OSS). Zumal Grafana (OSS) viele Features wie z.B. Zeitzonen-Handling, flexible Intervalle, Alert-/Ampelsystem, Links zu anderen Anwendungen und Variablen-Handling bereits out of the box bereitstellt.<br>
